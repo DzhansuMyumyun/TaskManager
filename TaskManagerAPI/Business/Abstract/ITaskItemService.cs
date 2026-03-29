@@ -12,6 +12,8 @@ namespace Business.Abstract
         IDataResult<List<TaskItem>> GetByStatusId(int id);
         IDataResult<TaskItem> GetById(int id);
         IResult Add(TaskItem item);
+        IResult Update(TaskItem item);
+        IResult Delete(int itemId);
 
     }
 }

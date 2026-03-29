@@ -1,10 +1,23 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Business.Abstract;
 using Business.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
+using DataAccess.DependencyResolvers.Autofac;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+// --- ADD THIS LINE TO USE AUTOFAC ---
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+
+// --- REGISTER YOUR AUTOFAC MODULE ---
+builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
+{
+    containerBuilder.RegisterModule(new AutofacBusinessModule());
+});
 
 // Add services to the container.
 // 1. Add Database Support (SQL Server)
@@ -13,13 +26,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 2. Dependency Injection: Linking Interfaces to Classes
 // Data Access Layer
-builder.Services.AddSingleton<ITaskDal, EfTaskItemDal>();
-
-// Business Layer
-builder.Services.AddSingleton<ITaskItemService, TaskItemManager>();
+//builder.Services.AddSingleton<ITaskDal, EfTaskItemDal>();
+//builder.Services.AddSingleton<ITaskItemService, TaskItemManager>();
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 // 4. OpenAPI/Swagger Support
