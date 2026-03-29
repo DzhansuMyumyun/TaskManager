@@ -2,15 +2,12 @@
 using Entities.Concrete;
 using System.Collections.Generic;
 using System.Text;
+using Core.DataAccess;
 
 namespace DataAccess.Abstract
 {
-    public interface ITaskDal
+    public interface ITaskDal : IEntityRepository<TaskItem>
     {
-        //CRUD
-        void Create(TaskItem taskItem);
-        List<TaskItem> GetAll();
-        void Update(TaskItem taskItem);
-        void Delete(TaskItem taskItem);
+
     }
 }

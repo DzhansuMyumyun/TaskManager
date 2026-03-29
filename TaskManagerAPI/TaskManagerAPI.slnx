@@ -1,5 +1,7 @@
 <Solution>
   <Project Path="Business/Business.csproj" />
+  <Project Path="Core/Core.csproj" Id="20a3f636-e92b-4e08-86b2-835dadea7ff4" />
   <Project Path="DataAccess/DataAccess.csproj" />
   <Project Path="Entities/Entities.csproj" />
+  <Project Path="TaskManagerWebAPI/TaskManagerWebAPI.csproj" Id="ed4d41bb-b351-45ec-944b-1a2658f3f03c" />
 </Solution>
