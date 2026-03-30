@@ -3,6 +3,7 @@ using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.Constants;
 using Core.CrossCuttingConcerns.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
@@ -32,10 +33,16 @@ namespace Business.Concrete
         [ValidationAspect(typeof(TaskItemValidator))]
         public IResult Add(TaskItem item)
         {
-
+            IResult result =  BusinessRules.Run(CheckIfTaskTitleExists(item.Title));
+            if (result != null)
+            {
+                return result;
+            }
+    
             _taskItemDal.Create(item);
-
             return new SuccessResult(Messages.TaskAdded);
+
+    
         }
 
         public IResult Delete(int itemId)
@@ -63,15 +70,31 @@ namespace Business.Concrete
                     Messages.ListedTasks);  
         }
 
+
+        [ValidationAspect(typeof(TaskItemValidator))]
         public IResult Update(TaskItem item)
         {
-            if (item.Title.Length < 2)
-            {
-                return new ErrorResult(Messages.TaskTitleInvalid);
-            }
 
             _taskItemDal.Update(item);
             return new SuccessResult(Messages.TaskUpdated);
+        }
+
+
+
+
+
+
+
+        private IResult CheckIfTaskTitleExists(string taskTitle)
+        {
+            var result = _taskItemDal.GetAll(t=>t.Title == taskTitle).Any();
+            if (result)
+            {
+                return new ErrorResult(Messages.TaskTitleAlreadyExists);
+
+            }
+            return new SuccessResult();
+            
         }
     }
 }

@@ -11,5 +11,6 @@ namespace Core.Constants
         public static string ListedTasks = "The tasks are listed";
         public static string TaskUpdated = "The task is updated.";
         public static string TaskDeleted = "Selected task is deleted";
+        public static string TaskTitleAlreadyExists = "The task title exists";
     }
 }
