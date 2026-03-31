@@ -9,7 +9,6 @@ using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using FluentValidation;
-using Microsoft.Extensions.Validation;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -78,9 +77,6 @@ namespace Business.Concrete
             _taskItemDal.Update(item);
             return new SuccessResult(Messages.TaskUpdated);
         }
-
-
-
 
 
 
