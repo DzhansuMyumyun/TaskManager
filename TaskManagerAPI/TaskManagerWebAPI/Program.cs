@@ -2,12 +2,15 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Business.Abstract;
 using Business.Concrete;
+using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.DependencyResolvers.Autofac;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
 
 // --- ADD THIS LINE TO USE AUTOFAC ---
@@ -19,15 +22,7 @@ builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
     containerBuilder.RegisterModule(new AutofacBusinessModule());
 });
 
-// Add services to the container.
-// 1. Add Database Support (SQL Server)
-//builder.Services.AddDbContext<TaskManagerContext>(options =>
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// 2. Dependency Injection: Linking Interfaces to Classes
-// Data Access Layer
-//builder.Services.AddSingleton<ITaskDal, EfTaskItemDal>();
-//builder.Services.AddSingleton<ITaskItemService, TaskItemManager>();
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
@@ -47,7 +42,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
