@@ -1,68 +1,51 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
-using Microsoft.AspNetCore.Http;
+using Entities.DTOs.ProjectDTOs;
 using Microsoft.AspNetCore.Mvc;
 
-namespace TaskManagerWebAPI.Controllers
+[Route("api/[controller]")]
+[ApiController]
+public class ProjectsController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ProjectsController : ControllerBase
+    private readonly IProjectService _projectService;
+
+    public ProjectsController(IProjectService projectService)
     {
-        private readonly IProjectService _projectService;
+        _projectService = projectService;
+    }
 
-        public ProjectsController(IProjectService projectService)
-        {
-            _projectService = projectService;
-        }
+    [HttpGet]
+    public IActionResult GetAll()
+    {
+        var result = _projectService.GetAll();
+        return Ok(result);
+    }
 
-        [HttpGet("getall")]
-        public IActionResult GetAll()
-        {
-            var result = _projectService.GetAll();
-            if (result.Success) 
-                return Ok(result);
-            return BadRequest(result);
-        }
+    [HttpGet("{id}")]
+    public IActionResult GetById(int id)
+    {
+        var result = _projectService.GetById(id);
+        return Ok(result);
+    }
 
-        [HttpGet("getsummaries")]
-        public IActionResult GetProjectSummaries()
-        {
-            var result = _projectService.GetProjectSummaries();
-            if (result.Success) return Ok(result);
-            return BadRequest(result);
-        }
+    [HttpPost]
+    public IActionResult Add([FromBody] ProjectCreateDto dto)
+    {
+        var result = _projectService.Add(dto);
+        return Ok(result);
+    }
 
-        [HttpPost("add")]
-        public IActionResult Add(Project project)
-        {
-            var result = _projectService.Add(project);
-            if (result.Success) return Ok(result);
-            return BadRequest(result);
-        }
+    [HttpPut]
+    public IActionResult Update([FromBody] ProjectUpdateDto dto)
+    {
+        var result = _projectService.Update(dto);
+        return Ok(result);
+    }
 
-
-        [HttpPost("update")]
-        public IActionResult Update(Project project)
-        {
-            var result = _projectService.Update(project);
-            if (result.Success)
-            {
-                return Ok(result.Message);
-            }
-            return BadRequest(result.Message);
-        }
-
-
-        [HttpDelete("delete/{id}")]
-        public IActionResult Delete(int id)
-        {
-            var result = _projectService.Delete(id);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+    {
+        var result = _projectService.Delete(id);
+        return Ok(result);
     }
 }

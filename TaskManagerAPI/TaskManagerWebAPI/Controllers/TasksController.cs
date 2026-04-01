@@ -2,6 +2,7 @@
 using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
+using Entities.DTOs.TaskDTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,73 +10,32 @@ namespace TaskManagerWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TasksController : ControllerBase
+    public class TaskItemsController : ControllerBase
     {
-        //IoC container = Inversion of Control
+        private readonly ITaskItemService _taskItemService;
 
-        ITaskItemService _taskItemService;
-        public TasksController( ITaskItemService taskItemService)
+        public TaskItemsController(ITaskItemService taskItemService)
         {
             _taskItemService = taskItemService;
         }
 
-        [HttpGet("getall")]
-        public IActionResult GetAll()
-        {
-            var result = _taskItemService.GetAll();
-            if (result.Success) 
-            { 
-                return Ok(result.Data);
-            }
-            return BadRequest(result.Message);
-        }
+        [HttpGet]
+        public IActionResult GetAll() => Ok(_taskItemService.GetAll());
 
-        [HttpGet("getbyid/{id}")]
-        public IActionResult GetById(int id)
-        {
-            var result = _taskItemService.GetById(id);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id) => Ok(_taskItemService.GetById(id));
 
+        [HttpGet("status/{id}")]
+        public IActionResult GetByStatus(int id) => Ok(_taskItemService.GetByStatusId(id));
 
-        [HttpPost("add")]
-        public IActionResult Add(TaskItem taskItem)
-        {
-            var result = _taskItemService.Add(taskItem);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
+        [HttpPost]
+        public IActionResult Add([FromBody] TaskItemCreateDto dto) => Ok(_taskItemService.Add(dto));
 
-        [HttpPost("update")]
-        public IActionResult Update(TaskItem taskItem)
-        {
-            var result = _taskItemService.Update(taskItem);
-            if (result.Success)
-            {
-                return Ok(result.Message);
-            }
-            return BadRequest(result.Message);
-        }
+        [HttpPut]
+        public IActionResult Update([FromBody] TaskItemUpdateDto dto) => Ok(_taskItemService.Update(dto));
 
-
-        [HttpDelete("delete/{id}")]
-        public IActionResult Delete(int id)
-        {
-            var result = _taskItemService.Delete(id);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id) => Ok(_taskItemService.Delete(id));
     }
 
 }

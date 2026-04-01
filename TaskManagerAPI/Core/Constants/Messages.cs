@@ -29,5 +29,20 @@ namespace Core.Constants
         public static string ProjectsListed = "The projects are listed";
 
         public static string ProjectUpdated = "The project is updated";
+
+        public static string ProjectNotFound { get; set; }
+        public static string ProjectDeleted { get; set; }
+        public static string ListedProjects { get; set; }
+        public static string SubTaskAdded { get; set; }
+        public static string SubTaskNotFound { get; set; }
+        public static string SubTaskUpdated { get; set; }
+        public static string SubTaskDeleted { get; set; }
+        public static string ListedSubTasks { get; set; }
+        public static string ListedAttachments { get; set; }
+        public static string AttachmentAdded { get; set; }
+        public static string AttachmentDeleted { get; set; }
+        public static string ListedActivities { get; set; }
+        public static string ActivityAdded { get; set; }
+        public static string TaskNotFound { get; set; }
     }
 }
