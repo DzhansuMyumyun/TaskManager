@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Core.Entities;
+using Entities.Abstract;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,5 +10,8 @@ namespace Core.Entities.Concrete
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+        // Navigation
+        public virtual ICollection<UserOperationClaim> UserOperationClaims { get; set; } = new List<UserOperationClaim>();
     }
 }

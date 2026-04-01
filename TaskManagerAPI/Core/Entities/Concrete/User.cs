@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Core.Entities;
+using Entities.Abstract;
+using Entities.Concrete;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -14,6 +17,11 @@ namespace Core.Entities.Concrete
         public byte[] PasswordHash { get; set; }
         public bool Status { get; set; }
 
+
+        // Navigation
+        public virtual ICollection<Project> Projects { get; set; } = new List<Project>();
+        public virtual ICollection<TaskActivity> TaskActivities { get; set; } = new List<TaskActivity>();
+        public virtual ICollection<UserOperationClaim> UserOperationClaims { get; set; } = new List<UserOperationClaim>();
 
     }
 }

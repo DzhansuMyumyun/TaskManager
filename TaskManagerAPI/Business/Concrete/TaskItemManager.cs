@@ -29,14 +29,14 @@ namespace Business.Concrete
             _taskItemDal = taskItemService;
         }
 
-        [ValidationAspect(typeof(TaskItemValidator))]
+        //[ValidationAspect(typeof(TaskItemValidator))]
         public IResult Add(TaskItem item)
         {
-            IResult result =  BusinessRules.Run(CheckIfTaskTitleExists(item.Title));
-            if (result != null)
-            {
-                return result;
-            }
+            //IResult result =  BusinessRules.Run(CheckIfTaskTitleExists(item.Title));
+            //if (result != null)
+            //{
+            //    return result;
+            //}
     
             _taskItemDal.Create(item);
             return new SuccessResult(Messages.TaskAdded);
@@ -70,7 +70,7 @@ namespace Business.Concrete
         }
 
 
-        [ValidationAspect(typeof(TaskItemValidator))]
+        //[ValidationAspect(typeof(TaskItemValidator))]
         public IResult Update(TaskItem item)
         {
 

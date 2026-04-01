@@ -1,5 +1,4 @@
-﻿using Core.Entities.Concrete;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -22,5 +21,13 @@ namespace Core.Constants
         public static string SuccessfulLogin = "You have successfully logged in.";
         public static string UserAlreadyExists = "This user exists";
         public static string AccessTokenCreated = "The access token is created";
+
+        public static string ProjectAdded = "The project is added";
+
+        public static string ProjectIsDeleted = "The project is deleted";
+
+        public static string ProjectsListed = "The projects are listed";
+
+        public static string ProjectUpdated = "The project is updated";
     }
 }

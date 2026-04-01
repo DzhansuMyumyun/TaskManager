@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Entities.Abstract;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Core.Entities.DTOs
+namespace Entities.DTOs.UserDTOs
 {
     public class UserForLoginDto : IDto
     {
