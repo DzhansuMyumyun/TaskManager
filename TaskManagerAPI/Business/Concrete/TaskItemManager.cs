@@ -8,10 +8,12 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
+using Entities.DTOs;
 using Entities.DTOs.TaskDTOs;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Text;
 
 namespace Business.Concrete
@@ -19,10 +21,12 @@ namespace Business.Concrete
     public class TaskItemManager : ITaskItemService
     {
         private  ITaskDal _taskItemDal;
+        private ITaskActivityService _taskActivityService;
 
-        public TaskItemManager(ITaskDal taskItemDal)
+        public TaskItemManager(ITaskDal taskItemDal, ITaskActivityService taskActivityDal)
         {
             _taskItemDal = taskItemDal;
+            _taskActivityService = taskActivityDal;
         }
 
         public IDataResult<List<TaskItem>> GetAll()
@@ -53,6 +57,7 @@ namespace Business.Concrete
             };
 
             _taskItemDal.Create(task);
+            LogActivity(task.Id, $"Task '{task.Title}' created");
             return new SuccessResult(Messages.TaskAdded);
         }
 
@@ -68,13 +73,36 @@ namespace Business.Concrete
             task.DueDate = dto.DueDate;
 
             _taskItemDal.Update(task);
+
+            var oldTask = _taskItemDal.Get(t => t.Id == dto.Id);
+            if (oldTask.Status != dto.Status)
+            {
+                LogActivity(task.Id, $"Status changed from {oldTask.Status} → {dto.Status}");
+            }
+
             return new SuccessResult(Messages.TaskUpdated);
         }
 
         public IResult Delete(int taskId)
         {
-            _taskItemDal.Delete(new TaskItem { Id = taskId });
+            var task = _taskItemDal.Get(t => t.Id == taskId);
+            if (task == null)
+                return new ErrorResult(Messages.TaskNotFound);
+
+            _taskItemDal.Delete(task);
+            LogActivity(task.Id, $"Task '{task.Title}' deleted");
             return new SuccessResult(Messages.TaskDeleted);
+        }
+
+
+        private void LogActivity(int taskId, string message)
+        {
+            _taskActivityService.Add(new TaskActivityCreateDto
+            {
+                TaskItemId = taskId,
+                UserId = 1,
+                LogDetails = message
+            });
         }
     }
 }

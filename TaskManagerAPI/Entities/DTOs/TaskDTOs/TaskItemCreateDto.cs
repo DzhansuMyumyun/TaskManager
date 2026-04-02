@@ -15,5 +15,7 @@ namespace Entities.DTOs.TaskDTOs
         public TaskItem.TaskStatus Status { get; set; } = TaskItem.TaskStatus.Todo;
         public TaskItem.PriorityStatus Priority { get; set; } = TaskItem.PriorityStatus.Medium;
         public DateTime? DueDate { get; set; }
+
+
     }
 }

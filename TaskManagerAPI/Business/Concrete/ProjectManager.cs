@@ -16,9 +16,10 @@ namespace Business.Concrete
     {
         private IProjectDal _projectDal;
 
-        public ProjectManager(IProjectDal projectDal)
+        public ProjectManager(IProjectDal projectDal )
         {
             _projectDal = projectDal;
+    
         }
 
         public IDataResult<List<Project>> GetAll()
@@ -65,5 +66,7 @@ namespace Business.Concrete
             _projectDal.Delete(new Project { Id = projectId });
             return new SuccessResult(Messages.ProjectDeleted);
         }
+
+
     }
 }

@@ -30,19 +30,19 @@ namespace Core.Constants
 
         public static string ProjectUpdated = "The project is updated";
 
-        public static string ProjectNotFound { get; set; }
-        public static string ProjectDeleted { get; set; }
-        public static string ListedProjects { get; set; }
-        public static string SubTaskAdded { get; set; }
-        public static string SubTaskNotFound { get; set; }
-        public static string SubTaskUpdated { get; set; }
-        public static string SubTaskDeleted { get; set; }
-        public static string ListedSubTasks { get; set; }
-        public static string ListedAttachments { get; set; }
-        public static string AttachmentAdded { get; set; }
-        public static string AttachmentDeleted { get; set; }
-        public static string ListedActivities { get; set; }
-        public static string ActivityAdded { get; set; }
-        public static string TaskNotFound { get; set; }
+        public static string ProjectNotFound = "Project not found";
+        public static string ProjectDeleted = "Project is deleted";
+        public static string ListedProjects = "All projects are listed";
+        public static string SubTaskAdded = "Sub task is added";
+        public static string SubTaskNotFound = "Sub task is not found";
+        public static string SubTaskUpdated = "Sub task is updated";
+        public static string SubTaskDeleted = "Sub task is deleted";
+        public static string ListedSubTasks = "All sub tasks are listed";
+        public static string ListedAttachments = "All attachments are lsted";
+        public static string AttachmentAdded = "The attachment is added";
+        public static string AttachmentDeleted = "Attachment is deleted";
+        public static string ListedActivities = "All activities are listed";
+        public static string ActivityAdded = "The activity is added";
+        public static string TaskNotFound = "The task is not found";
     }
 }
