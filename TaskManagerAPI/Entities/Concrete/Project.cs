@@ -20,5 +20,6 @@ namespace Entities.Concrete
 
         // Navigation to TaskItems
         public virtual ICollection<TaskItem> TaskItems { get; set; } = new List<TaskItem>();
+        public virtual List<ProjectActivity> ProjectActivities { get; set; } = new();
     }
 }

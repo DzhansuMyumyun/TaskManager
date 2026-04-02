@@ -32,6 +32,7 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<SubTask> SubTasks { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
         public DbSet<TaskActivity> TaskActivities { get; set; }
+        public DbSet<ProjectActivity> ProjectActivities { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -149,6 +150,14 @@ namespace DataAccess.Concrete.EntityFramework
                   .HasForeignKey(ta => ta.UserId)
                   .OnDelete(DeleteBehavior.Restrict); // don't delete history if user removed
             });
+            #endregion
+
+            #region ProjectActivity
+            modelBuilder.Entity<Project>()
+                .HasMany(p => p.ProjectActivities)
+                .WithOne(a => a.Project)
+                .HasForeignKey(a => a.ProjectId)
+                .OnDelete(DeleteBehavior.Cascade);
             #endregion
         }
     }

@@ -32,6 +32,9 @@ namespace DataAccess.DependencyResolvers.Autofac
             builder.RegisterType<TaskActivityManager>().As<ITaskActivityService>().SingleInstance();
             builder.RegisterType<EfTaskActivityDal>().As<ITaskActivityDal>().SingleInstance();
 
+            builder.RegisterType<ProjectActivityManager>().As<IProjectActivityService>().SingleInstance();
+            builder.RegisterType<EfProjectActivityDal>().As<IProjectActivityDal>().SingleInstance();
+
             builder.RegisterType<UserManager>().As<IUserService>();
             builder.RegisterType<EfUserDal>().As<IUserDal>();
 
