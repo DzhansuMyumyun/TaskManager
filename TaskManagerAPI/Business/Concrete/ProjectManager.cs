@@ -23,7 +23,9 @@ namespace Business.Concrete
 
         public IDataResult<List<Project>> GetAll()
         {
-            return new SuccessDataResult<List<Project>>(_projectDal.GetAll(), Messages.ListedProjects);
+            var projects = _projectDal.GetAll(includes: p => p.TaskItems);
+       
+            return new SuccessDataResult<List<Project>>(projects, Messages.ListedProjects);
         }
 
         public IDataResult<Project> GetById(int id)

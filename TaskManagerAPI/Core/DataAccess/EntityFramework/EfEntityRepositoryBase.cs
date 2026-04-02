@@ -33,11 +33,17 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
-        public TEntity Get(Expression<Func<TEntity, bool>> filter)
+        public TEntity Get(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, object>>[] includes)
         {
             using (var context = new TContext())
             {
-                return context.Set<TEntity>().SingleOrDefault(filter);
+                IQueryable<TEntity> query = context.Set<TEntity>();
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+
+                return query.SingleOrDefault(filter);
             }
         }
 
@@ -52,13 +58,26 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
-        List<TEntity> IEntityRepository<TEntity>.GetAll(Expression<Func<TEntity, bool>> filter)
+        List<TEntity> IEntityRepository<TEntity>.GetAll(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, object>>[] includes)
         {
             using (var context = new TContext())
             {
-                return filter == null
-                    ? context.Set<TEntity>().ToList()
-                    : context.Set<TEntity>().Where(filter).ToList();
+                IQueryable<TEntity> query = context.Set<TEntity>();
+                // Apply includes
+                if (includes != null)
+                {
+                    foreach (var include in includes)
+                    {
+                        query = query.Include(include);
+                    }
+                }
+                // Apply filter
+                if (filter != null)
+                {
+                    query = query.Where(filter);
+                }
+
+                return query.ToList();
             }
         }
     }
