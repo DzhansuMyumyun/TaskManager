@@ -11,7 +11,7 @@ export const getTasks = async (): Promise<Task[]> =>{
 export const getTaskById = async (id: number): Promise<Task> => {
   const response = await api.get<Task>(`/TaskItems/${id}`);
   return response.data;
-};
+}; 
 
 // CREATE task
 export const createTask = async (
