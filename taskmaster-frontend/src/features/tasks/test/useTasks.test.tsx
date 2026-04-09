@@ -2,7 +2,7 @@ import { renderHook, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useTasks } from "../useTasks";
 import { getTasks } from "../taskService";
-import type { Task } from "../taskTypes";
+import type { Task } from "../../../types/taskTypes";
 import { test, expect, vi } from "vitest";
 
 

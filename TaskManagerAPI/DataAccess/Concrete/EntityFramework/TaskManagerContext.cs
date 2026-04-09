@@ -149,6 +149,11 @@ namespace DataAccess.Concrete.EntityFramework
                   .WithMany()
                   .HasForeignKey(ta => ta.UserId)
                   .OnDelete(DeleteBehavior.Restrict); // don't delete history if user removed
+
+                ta.HasOne<TaskItem>()
+                  .WithMany(t => t.TaskActivities)
+                  .HasForeignKey(ta => ta.TaskItemId)
+                  .OnDelete(DeleteBehavior.SetNull);
             });
             #endregion
 

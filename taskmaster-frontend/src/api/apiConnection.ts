@@ -1,6 +1,6 @@
 import api from "./axios";
 
-export const testConnection = async() => {
+export const apiConnection = async() => {
     const response = await api.get("/TaskItems");
     return response.data;
 }

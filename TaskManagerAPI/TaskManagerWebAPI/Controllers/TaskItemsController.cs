@@ -14,7 +14,18 @@ public class TaskItemsController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetAll() => Ok(_taskItemService.GetAll());
+    public IActionResult GetAll()
+    {
+        // Change this from _taskItemService.GetAll() 
+        // to your new method:
+        var result = _taskItemService.GetTasksWithDetails();
+
+        if (result.Success)
+        {
+            return Ok(result);
+        }
+        return BadRequest(result.Message);
+    }
 
     [HttpGet("{id}")]
     public IActionResult GetById(int id) => Ok(_taskItemService.GetById(id));

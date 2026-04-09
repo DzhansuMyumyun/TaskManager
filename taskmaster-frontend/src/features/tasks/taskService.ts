@@ -1,5 +1,11 @@
 import api from "../../api/axios";
-import type { Task } from "./taskTypes";
+import type { Task } from "../../types/taskTypes";
+
+interface ApiResponse<T> {
+  data: T;
+  success: boolean;
+  message?: string;
+}
 
 // GET tasks
 export const getTasks = async (): Promise<Task[]> =>{
@@ -19,6 +25,15 @@ export const createTask = async (
 ): Promise<Task> => {
   const response = await api.post<Task>("/TaskItems", task);
   return response.data;
+};
+
+// UPDATE
+export const updateTask = async (
+  id: number,
+  task: Partial<Task>
+): Promise<Task> => {
+  const response = await api.put<ApiResponse<Task>>(`/tasks/${id}`, task);
+  return response.data.data;
 };
 
 // DELETE task

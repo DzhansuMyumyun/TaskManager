@@ -44,6 +44,12 @@ namespace Business.Concrete
             return new SuccessDataResult<List<TaskItem>>(_taskItemDal.GetAll(t => (int)t.Status == id));
         }
 
+        public IDataResult<List<TaskItem>> GetTasksWithDetails()
+        {
+           
+            return new SuccessDataResult<List<TaskItem>>(_taskItemDal.GetTasksWithDetails());
+        }
+
         public IResult Add(TaskItemCreateDto dto)
         {
             var task = new TaskItem
@@ -55,9 +61,10 @@ namespace Business.Concrete
                 Priority = dto.Priority,
                 DueDate = dto.DueDate
             };
-
             _taskItemDal.Create(task);
+
             LogActivity(task.Id, $"Task '{task.Title}' created");
+
             return new SuccessResult(Messages.TaskAdded);
         }
 
@@ -89,8 +96,9 @@ namespace Business.Concrete
             if (task == null)
                 return new ErrorResult(Messages.TaskNotFound);
 
-            _taskItemDal.Delete(task);
             LogActivity(task.Id, $"Task '{task.Title}' deleted");
+            _taskItemDal.Delete(task);
+
             return new SuccessResult(Messages.TaskDeleted);
         }
 

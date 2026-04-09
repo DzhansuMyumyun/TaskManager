@@ -8,6 +8,7 @@ namespace Entities.DTOs.SubtaskDTOs
     public class SubTaskCreateDto : IDto
     {
         public int Id { get; set; }
+        public int TaskId { get; set; }
         public string Title { get; set; } = string.Empty;
         public bool IsCompleted { get; set; }
     }

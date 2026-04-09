@@ -2,6 +2,7 @@
 using Core.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using Entities.DTOs.SubtaskDTOs;
 using System;
@@ -29,12 +30,17 @@ namespace Business.Concrete
             return new SuccessDataResult<SubTask>(_subTaskDal.Get(s => s.Id == id));
         }
 
+        public IDataResult<List<SubTask>> GetAllByTaskId(int taskId)
+        {
+            return new SuccessDataResult<List<SubTask>>( _subTaskDal.GetAll(s => s.TaskItemId == taskId));
+        }
         public IResult Add(SubTaskCreateDto dto)
         {
             var subTask = new SubTask
             {
-                TaskItemId = dto.Id,
+                TaskItemId = dto.TaskId,
                 Title = dto.Title
+
             };
             _subTaskDal.Create(subTask);
             return new SuccessResult(Messages.SubTaskAdded);
@@ -48,6 +54,7 @@ namespace Business.Concrete
             subTask.Title = dto.Title;
             subTask.IsCompleted = dto.IsCompleted;
 
+
             _subTaskDal.Update(subTask);
             return new SuccessResult(Messages.SubTaskUpdated);
         }
@@ -57,5 +64,6 @@ namespace Business.Concrete
             _subTaskDal.Delete(new SubTask { Id = subTaskId });
             return new SuccessResult(Messages.SubTaskDeleted);
         }
+
     }
 }
