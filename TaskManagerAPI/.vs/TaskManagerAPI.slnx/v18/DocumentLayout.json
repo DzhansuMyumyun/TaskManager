@@ -7,6 +7,10 @@
       "RelativeMoniker": "D:0:0:{C5827C10-32D2-D72F-4639-49B48E591E74}|Business\\Business.csproj|solutionrelative:business\\concrete\\taskitemmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{45E8AD2D-F6CC-99C0-B6AF-489676982DA4}|DataAccess\\DataAccess.csproj|c:\\users\\dzhan\\onedrive\\documents\\github\\taskmanager\\taskmanagerapi\\dataaccess\\concrete\\entityframework\\taskmanagercontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{45E8AD2D-F6CC-99C0-B6AF-489676982DA4}|DataAccess\\DataAccess.csproj|solutionrelative:dataaccess\\concrete\\entityframework\\taskmanagercontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{C5827C10-32D2-D72F-4639-49B48E591E74}|Business\\Business.csproj|c:\\users\\dzhan\\onedrive\\documents\\github\\taskmanager\\taskmanagerapi\\business\\concrete\\taskactivitymanager .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C5827C10-32D2-D72F-4639-49B48E591E74}|Business\\Business.csproj|solutionrelative:business\\concrete\\taskactivitymanager .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -71,7 +75,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -84,16 +88,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "dbo.Users [Data]",
-              "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/TaskManager/True/SqlTable/dbo.Users.sql",
-              "ToolTip": "dbo.Users [Data]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2026-04-09T21:21:34.859Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
               "Title": "TaskActivityManager .cs",
               "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Business\\Concrete\\TaskActivityManager .cs",
               "RelativeDocumentMoniker": "Business\\Concrete\\TaskActivityManager .cs",
@@ -106,7 +100,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "ITaskDal.cs",
               "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\DataAccess\\Abstract\\ITaskDal.cs",
               "RelativeDocumentMoniker": "DataAccess\\Abstract\\ITaskDal.cs",
@@ -125,14 +119,37 @@
               "RelativeDocumentMoniker": "Business\\Concrete\\TaskItemManager.cs",
               "ToolTip": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Business\\Concrete\\TaskItemManager.cs",
               "RelativeToolTip": "Business\\Concrete\\TaskItemManager.cs",
-              "ViewState": "AgIAADMAAAAAAAAAAAAowEAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAuwFAAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-09T20:32:15.181Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
+              "Title": "TaskManagerContext.cs",
+              "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\DataAccess\\Concrete\\EntityFramework\\TaskManagerContext.cs",
+              "RelativeDocumentMoniker": "DataAccess\\Concrete\\EntityFramework\\TaskManagerContext.cs",
+              "ToolTip": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\DataAccess\\Concrete\\EntityFramework\\TaskManagerContext.cs",
+              "RelativeToolTip": "DataAccess\\Concrete\\EntityFramework\\TaskManagerContext.cs",
+              "ViewState": "AgIAAJAAAAAAAAAAAAAAwKgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T21:28:17.648Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "dbo.Users [Data]",
+              "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/TaskManager/True/SqlTable/dbo.Users.sql",
+              "ToolTip": "dbo.Users [Data]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2026-04-09T21:21:34.859Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "TaskActivity .cs",
               "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Entities\\Concrete\\TaskActivity .cs",
               "RelativeDocumentMoniker": "Entities\\Concrete\\TaskActivity .cs",
@@ -145,7 +162,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "TaskActivityCreateDto.cs",
               "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Entities\\DTOs\\TaskActivityCreateDto.cs",
               "RelativeDocumentMoniker": "Entities\\DTOs\\TaskActivityCreateDto.cs",
@@ -158,7 +175,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "ITaskItemService.cs",
               "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Business\\Abstract\\ITaskItemService.cs",
               "RelativeDocumentMoniker": "Business\\Abstract\\ITaskItemService.cs",
@@ -171,7 +188,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "EfTaskItemDal.cs",
               "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\DataAccess\\Concrete\\EntityFramework\\EfTaskItemDal.cs",
               "RelativeDocumentMoniker": "DataAccess\\Concrete\\EntityFramework\\EfTaskItemDal.cs",
@@ -184,7 +201,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "SubTaskCreateDto.cs",
               "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Entities\\DTOs\\SubtaskDTOs\\SubTaskCreateDto.cs",
               "RelativeDocumentMoniker": "Entities\\DTOs\\SubtaskDTOs\\SubTaskCreateDto.cs",
@@ -197,7 +214,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "TaskDto.cs",
               "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Entities\\DTOs\\TaskDTOs\\TaskDto.cs",
               "RelativeDocumentMoniker": "Entities\\DTOs\\TaskDTOs\\TaskDto.cs",
@@ -210,7 +227,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "TaskItem.cs",
               "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Entities\\Concrete\\TaskItem.cs",
               "RelativeDocumentMoniker": "Entities\\Concrete\\TaskItem.cs",
@@ -223,7 +240,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "SubTask .cs",
               "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Entities\\Concrete\\SubTask .cs",
               "RelativeDocumentMoniker": "Entities\\Concrete\\SubTask .cs",
@@ -236,7 +253,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "ISubTaskService.cs",
               "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Business\\Abstract\\ISubTaskService.cs",
               "RelativeDocumentMoniker": "Business\\Abstract\\ISubTaskService.cs",
@@ -249,7 +266,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "dbo.TaskItems.sql",
               "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/TaskManager/True/SqlTable/dbo.TaskItems.sql",
               "ToolTip": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/TaskManager/True/SqlTable/dbo.TaskItems.sql",
@@ -258,7 +275,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "dbo.Projects.sql",
               "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/TaskManager/True/SqlTable/dbo.Projects.sql",
               "ToolTip": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/TaskManager/True/SqlTable/dbo.Projects.sql",
@@ -267,7 +284,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\TaskManagerWebAPI\\Program.cs",
               "RelativeDocumentMoniker": "TaskManagerWebAPI\\Program.cs",

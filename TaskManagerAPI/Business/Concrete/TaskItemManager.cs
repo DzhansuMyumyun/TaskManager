@@ -72,6 +72,7 @@ namespace Business.Concrete
         {
             var task = _taskItemDal.Get(t => t.Id == dto.Id);
             if (task == null) return new ErrorResult(Messages.TaskNotFound);
+            var oldStatus = task.Status;
 
             task.Title = dto.Title;
             task.Description = dto.Description;
@@ -81,10 +82,9 @@ namespace Business.Concrete
 
             _taskItemDal.Update(task);
 
-            var oldTask = _taskItemDal.Get(t => t.Id == dto.Id);
-            if (oldTask.Status != dto.Status)
+            if (oldStatus != dto.Status)
             {
-                LogActivity(task.Id, $"Status changed from {oldTask.Status} → {dto.Status}");
+                LogActivity(task.Id, $"Status changed from {oldStatus} → {dto.Status}");
             }
 
             return new SuccessResult(Messages.TaskUpdated);
@@ -96,7 +96,7 @@ namespace Business.Concrete
             if (task == null)
                 return new ErrorResult(Messages.TaskNotFound);
 
-            LogActivity(task.Id, $"Task '{task.Title}' deleted");
+            LogActivity(0, $"Task '{task.Title}' deleted");
             _taskItemDal.Delete(task);
 
             return new SuccessResult(Messages.TaskDeleted);
@@ -107,7 +107,7 @@ namespace Business.Concrete
         {
             _taskActivityService.Add(new TaskActivityCreateDto
             {
-                TaskItemId = taskId,
+                TaskItemId = taskId == 0 ? null : taskId,
                 UserId = 1,
                 LogDetails = message
             });
