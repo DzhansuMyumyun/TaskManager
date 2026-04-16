@@ -1,12 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createTask, deleteTask, updateTask } from "./taskService";
-import type { Task } from "../../types/taskTypes";
+import type { Task, CreateTaskDto } from "../../types/taskTypes";
 
 export const useTaskMutations = () => {
   const queryClient = useQueryClient();
 
-  const create = useMutation({
-    mutationFn: createTask,
+const create = useMutation({
+    mutationFn: (data: CreateTaskDto) => createTask(data), 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
     },

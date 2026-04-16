@@ -1,3 +1,6 @@
+import type { SubTask } from "./SubTask";
+import type { TaskActivity } from "./TaskActivity";
+
 export interface Task{
     id: number;
     projectId: number; 
@@ -7,4 +10,16 @@ export interface Task{
     priority:number;
     dueDate:string;
     createdAt: string;
+    subTasks:SubTask[];
+    taskActivities: TaskActivity[];
+}
+
+export interface CreateTaskDto {
+  title: string;
+  description: string;
+  priority: number;
+  status: number;
+  projectId: number;
+  dueDate: string;
+  subTasks: Omit<SubTask, 'id' | 'taskItemId'>[];
 }

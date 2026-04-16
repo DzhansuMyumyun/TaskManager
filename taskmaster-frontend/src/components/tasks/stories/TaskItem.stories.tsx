@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import TaskCard from './TaskCard';
+import TaskCard from '../TaskCard';
 
 const meta:Meta<typeof TaskCard>={
     title: 'Components/Tasks/TaskCard',
@@ -19,32 +19,56 @@ const meta:Meta<typeof TaskCard>={
 export default meta;
 type Story = StoryObj<typeof TaskCard>;
 
-export const Default: Story = {
+export const UpcomingLow: Story = {
   args: {
     task: {
       id: 1,
       title: 'Complete task management',
       description: 'Finish the CRUD operations and Storybook setup.',
-      status: 1,
-      priority: 2,
+      status: 0,
+      priority: 0,
       projectId:2,
       createdAt:'2026/05/04',
-      dueDate:'2026/06/05'
+      dueDate:'2026/06/05',
+      subTasks: [],
+      taskActivities:[]
+
     },
   },
 };
 
-export const Completed: Story = {
+export const InProgressMedium: Story = {
   args: {
     task: {
       id: 2,
       title: 'Setup API connection',
       description: 'Axios integration with the backend.',
-      status: 2,
+      status: 1,
       priority: 1,
-        projectId:2,
+      projectId:2,
       createdAt:'2026/05/04',
-      dueDate:'2026/06/05'
+      dueDate:'2026/06/05',
+      subTasks: [],
+      taskActivities:[]
     },
   },
 };
+
+
+export const DoneUrgent: Story = {
+  args: {
+    task: {
+      id: 3,
+      title: 'Setup API connection',
+      description: 'Axios integration with the backend.',
+      status: 2,
+      priority: 2,
+      projectId:2,
+      createdAt:'2026/05/04',
+      dueDate:'2026/06/05',
+      subTasks: [],
+      taskActivities:[]
+    },
+  },
+};
+

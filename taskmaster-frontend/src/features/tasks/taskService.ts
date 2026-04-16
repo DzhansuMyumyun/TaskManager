@@ -1,5 +1,5 @@
 import api from "../../api/axios";
-import type { Task } from "../../types/taskTypes";
+import type { Task,CreateTaskDto } from "../../types/taskTypes";
 
 interface ApiResponse<T> {
   data: T;
@@ -21,7 +21,7 @@ export const getTaskById = async (id: number): Promise<Task> => {
 
 // CREATE task
 export const createTask = async (
-  task: Partial<Task>
+  task: CreateTaskDto
 ): Promise<Task> => {
   const response = await api.post<Task>("/TaskItems", task);
   return response.data;
@@ -32,11 +32,13 @@ export const updateTask = async (
   id: number,
   task: Partial<Task>
 ): Promise<Task> => {
-  const response = await api.put<ApiResponse<Task>>(`/tasks/${id}`, task);
+  const response = await api.put<ApiResponse<Task>>(`/TaskItems`, task);
+  //const response = await api.put<ApiResponse<Task>>(`/tasks/${id}`, task);
   return response.data.data;
 };
 
 // DELETE task
 export const deleteTask = async (id: number): Promise<void> => {
+  //await api.delete(`/TaskItems/${id}`);
   await api.delete(`/TaskItems/${id}`);
 };

@@ -6,34 +6,56 @@ interface Props {
   onToggle: (id:string) => void;
 }
 
-export default function TaskCard({ task ,onDelete}: Props) {
-  return (
-<div className="relative overflow-hidden bg-white/40 backdrop-blur-md border border-white/30 p-5 rounded-2xl shadow-sm transition-all hover:bg-white/50">
-      {/* Small Priority Indicator (The "Unique" Stripe) */}
-      <div className={`absolute left-0 top-0 h-full w-1 ${
-        task.priority === 2 ? 'bg-red-400' : 'bg-blue-400'
-      }`} />
+export default function TaskCard({ task, onDelete, onToggle }: Props) {
 
-      <div className="flex justify-between items-start">
-        <div>
-          <h2 className="font-semibold text-slate-800 text-lg leading-tight">{task.title}</h2>
-          <p className="text-sm text-slate-500 mt-1">{task.description}</p>
+  const priorityStyleColors: Record<number, { label: string, color: string, dot: string }> = {
+    0: { label: "Low", color: "bg-emerald-100 text-emerald-600", dot: "bg-emerald-400" },
+    1: { label: "Medium", color: "bg-amber-100 text-amber-500", dot: "bg-amber-400" },
+    2: { label: "Urgent", color: "bg-rose-200 text-rose-500", dot: "bg-rose-500" },
+  };
+
+    const statusStyleColors: Record<number, string> = {
+    0: 'bg-gray-400', // Upcoming 
+    1: 'bg-blue-500',   // In Progress
+    2: 'bg-emerald-400',    // Done
+  };
+
+ const priority = priorityStyleColors[task.priority] || priorityStyleColors[1];
+
+  return (
+<div className="group relative overflow-hidden bg-white/60 backdrop-blur-md border border-white/40 p-5 rounded-2xl shadow-sm transition-all hover:shadow-md hover:bg-white/80">
+      
+      {/* Priority Indicator Line */}
+      <div className={`absolute left-0 top-0 h-full w-1.5 ${statusStyleColors[task.status] || 'bg-slate-200'}`} />
+      
+      <div className="flex justify-between items-start pl-2">
+        <div className="flex-1">
+          <h2 className="font-bold text-slate-800 text-base leading-tight group-hover:text-blue-600 transition-colors">
+            {task.title}
+          </h2>
+          <p className="text-xs text-slate-500 mt-1.5 line-clamp-2 leading-relaxed">
+            {task.description}
+          </p>
         </div>
         
-        {/* CRUD Actions */}
-        <div className="flex gap-2">
-           <button 
-             onClick={() => onDelete?.(task.id)}
-             className="p-1.5 hover:bg-red-100 rounded-lg text-slate-400 hover:text-red-500 transition-colors"
-           >
-             🗑️
-           </button>
-        </div>
+        <button 
+          onClick={() => onDelete(task.id)}
+          className="ml-2 p-1.5 opacity-0 group-hover:opacity-100 hover:bg-red-50 rounded-lg text-slate-400 hover:text-red-500 transition-all"
+          aria-label="Delete task"
+        >
+          <span className="text-xs">🗑️</span>
+        </button>
       </div>
       
-      <div className="mt-4 flex items-center justify-between">
-        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-          {task.status}
+      <div className="mt-5 flex items-center justify-between pl-2">
+        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${priority.color}`}>
+          <span className={`w-1 h-1 rounded-full ${priority.dot}`} />
+          {priority.label}
+        </span>
+
+        {/* Placeholder for Date or Subtasks */}
+        <span className="text-[10px] font-medium text-slate-400 italic">
+          {task.dueDate ? `Due ${task.dueDate}` : ''}
         </span>
       </div>
     </div>
