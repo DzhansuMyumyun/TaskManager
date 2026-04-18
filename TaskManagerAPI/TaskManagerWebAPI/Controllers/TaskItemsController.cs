@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Entities.Concrete;
 using Entities.DTOs.TaskDTOs;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,10 +35,31 @@ public class TaskItemsController : ControllerBase
     public IActionResult GetByStatus(int id) => Ok(_taskItemService.GetByStatusId(id));
 
     [HttpPost]
-    public IActionResult Add([FromBody] TaskItemCreateDto dto) => Ok(_taskItemService.Add(dto));
+    public IActionResult Add([FromBody] TaskItemCreateDto dto)
+    {
+        var result = _taskItemService.Add(dto);
 
-    [HttpPut]
-    public IActionResult Update([FromBody] TaskItemUpdateDto dto) => Ok(_taskItemService.Update(dto));
+        if (!result.Success)
+            return BadRequest(result.Message);
+
+        return Ok(result);
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult Update(int id, [FromBody] TaskItemUpdateDto dto)
+    {
+        if (id != dto.Id)
+        {
+            return BadRequest("ID mismatch");
+        }
+
+        var result = _taskItemService.Update(dto);
+
+        if (result.Success)
+            return Ok(result);
+
+        return BadRequest(result.Message);
+    }
 
     [HttpDelete("{id}")]
     public IActionResult Delete(int id) => Ok(_taskItemService.Delete(id));

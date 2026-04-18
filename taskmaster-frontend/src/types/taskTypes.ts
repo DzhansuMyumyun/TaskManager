@@ -1,5 +1,5 @@
-import type { SubTask } from "./SubTask";
-import type { TaskActivity } from "./TaskActivity";
+import type { SubTask } from "./subTask";
+import type { TaskActivity } from "./taskActivity";
 
 export interface Task{
     id: number;

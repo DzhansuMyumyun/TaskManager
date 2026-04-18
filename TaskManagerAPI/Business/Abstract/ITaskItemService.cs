@@ -13,7 +13,7 @@ namespace Business.Abstract
         IDataResult<TaskItem> GetById(int id);
         IDataResult<List<TaskItem>> GetByStatusId(int id);
         IDataResult<List<TaskItem>> GetTasksWithDetails();
-        IResult Add(TaskItemCreateDto dto);
+        IDataResult<TaskItem> Add(TaskItemCreateDto dto);
         IResult Update(TaskItemUpdateDto dto);
         IResult Delete(int taskId);
 

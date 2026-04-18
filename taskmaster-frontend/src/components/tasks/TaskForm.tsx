@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useTaskMutations } from "../../features/tasks/useTaskMutations";
-import type { SubTask } from "../../types/SubTask";
+import { createSubTask, updateSubTask,deleteSubTask } from "../../features/subTask/subTaskService";
+import type { SubTask } from "../../types/subTask";
 import type { CreateTaskDto, Task } from "../../types/taskTypes";
 
-// Add initialData to props
 export default function TaskForm({
   onSuccess,
   initialData,
@@ -12,7 +12,7 @@ export default function TaskForm({
   initialData?: Task | null;
 }) {
   const { create, update } = useTaskMutations();
-
+  const [subTaskInput, setSubTaskInput] = useState("");
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -23,9 +23,9 @@ export default function TaskForm({
     subTasks: [] as Partial<SubTask>[],
   });
 
-  const [subTaskInput, setSubTaskInput] = useState("");
 
-  // Populate form if initialData is provided (Edit Mode)
+
+  // Populate form (Edit mode)
   useEffect(() => {
     if (initialData) {
       setFormData({
@@ -37,212 +37,314 @@ export default function TaskForm({
         dueDate: initialData.dueDate
           ? initialData.dueDate.split("T")[0]
           : new Date().toISOString().split("T")[0],
-        subTasks: initialData.subTasks || [],
+        subTasks: initialData.subTasks || []
       });
     }
   }, [initialData]);
 
-const addSubTask = (e: React.MouseEvent | React.KeyboardEvent) => {
-  e.preventDefault(); // Stop form submission
-  e.stopPropagation(); // Stop event bubbling
-  
+
+ const addSubTask = (e: React.MouseEvent | React.KeyboardEvent) => {
+  e.preventDefault();
+
   if (!subTaskInput.trim()) return;
 
-  console.log("Adding subtask:", subTaskInput); // Debug log
-
-  setFormData((prev) => ({
-    ...prev,
-    subTasks: [
+  setFormData((prev) => {
+    const updated = [
       ...prev.subTasks,
-      { 
-        title: subTaskInput.trim(), 
-        isCompleted: false 
+      {
+        title: subTaskInput.trim(),
+        isCompleted: false,
       },
-    ],
-  }));
-  
-  setSubTaskInput(""); // Clear input
+    ];
+
+    return {
+      ...prev,
+      subTasks: updated,
+    };
+  });
+
+  setSubTaskInput("");
 };
 
   const removeSubTask = (index: number) => {
-    setFormData({
-      ...formData,
-      subTasks: formData.subTasks.filter((_, i) => i !== index),
-    });
+    setFormData((prev) => ({
+      ...prev,
+      subTasks: prev.subTasks.filter((_, i) => i !== index),
+    }));
   };
 
-const handleSubmit = (e: React.FormEvent) => {
-  e.preventDefault();
-console.log("Submit clicked! InitialData ID:", initialData?.id);
-  if (initialData?.id) {
-    console.log("Attempting Update with:", formData);
-    // EDIT MODE
-    // Explicitly type the update object to satisfy Partial<Task>
-    const updatePayload: Partial<Task> = {
-      title: formData.title,
-      description: formData.description,
-      priority: formData.priority,
-      status: formData.status,
-      // The cast 'as SubTask[]' tells TS this is a real list, not a tuple
-      subTasks: formData.subTasks as SubTask[]
-    };
 
-    update.mutate({ id: initialData.id, data: updatePayload }, {
-      onSuccess: () => {
-          console.log("Update Successful!");
-          onSuccess();
-        },
-        onError: (err) => {
-          console.error("Update Failed:", err);
-        }
-    });
-  } else {
-    // CREATE MODE
-    const payload: CreateTaskDto = {
-      ...formData,
-      subTasks: formData.subTasks.map(st => ({
-        title: st.title || "",
-        isCompleted: st.isCompleted || false
-      }))
-    };
-    create.mutate(payload, {
-      onSuccess: () => onSuccess(),
-    });
-  }
-};
-  return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      {/* Title */}
-      <div>
-        <label className="block text-sm font-medium text-slate-700 mb-1">
-          Title
-        </label>
-        <input
-          required
-          className="w-full bg-white/50 border border-slate-200 rounded-xl px-4 py-2 outline-none focus:ring-2 focus:ring-blue-400"
-          value={formData.title}
-          onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-        />
-      </div>
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-      {/* Description */}
-      <div>
-        <label className="block text-sm font-medium text-slate-700 mb-1">
-          Description
-        </label>
-        <textarea
-          required
-          className="w-full bg-white/50 border border-slate-200 rounded-xl px-4 py-2 outline-none focus:ring-2 focus:ring-blue-400 min-h-[100px]"
-          value={formData.description}
-          onChange={(e) =>
-            setFormData({ ...formData, description: e.target.value })
+    try {
+      if (initialData?.id) {
+        // ✅ 1. UPDATE MAIN TASK FIRST
+        await new Promise((resolve, reject) => {
+          update.mutate(
+            {
+              id: initialData.id,
+              data: {
+                id: initialData.id,
+                title: formData.title,
+                description: formData.description,
+                status: formData.status,
+                priority: formData.priority,
+                projectId: formData.projectId,
+                dueDate: formData.dueDate,
+                subTasks: []
+              },
+            },
+            { onSuccess: resolve, onError: reject }
+          );
+      });
+
+
+      // ✅ 2. HANDLE DELETIONS
+      const existingIds = formData.subTasks.filter(st => st.id).map(st => st.id);
+      const originalIds = initialData?.subTasks?.map(st => st.id) || [];
+      const toDelete = originalIds.filter(id => !existingIds.includes(id));
+      
+      await Promise.all(toDelete.map(id => deleteSubTask(id)));
+
+
+      // ✅ 3. UPSERT REMAINING SUBTASKS (Wait for all to finish)
+      await Promise.all(
+        formData.subTasks.map((st) => {
+          if (st.id) {
+            return updateSubTask(st.id, {
+              id: st.id,
+              title: st.title || "",
+              isCompleted: st.isCompleted || false,
+              taskItemId: initialData.id!,
+            });
+          } else {
+            return createSubTask({
+              title: st.title || "",
+              isCompleted: st.isCompleted || false,
+              taskItemId: initialData.id!,
+            });
           }
-        />
+        })
+      );
+    } else {
+      // ✅ 4. CREATE NEW TASK
+        const createdTask: any = await new Promise((resolve, reject) => {
+          create.mutate(formData as CreateTaskDto, {
+            onSuccess: (data) => resolve(data),
+            onError: reject,
+          });
+        });
+
+        const taskId = createdTask?.data?.data?.id || createdTask?.data?.id || createdTask?.id;
+
+        if (!taskId) throw new Error("Task ID was not returned from API");
+
+        // ✅ CREATE SUBTASKS AFTER TASK EXISTS
+        if (!taskId) {
+        throw new Error("Task ID was not returned from API");
+        }
+      
+
+        // ✅ 5. CREATE SUBTASKS FOR NEW TASK
+        await Promise.all(
+          formData.subTasks.map((st) =>
+            createSubTask({
+              title: st.title || "",
+              isCompleted: st.isCompleted || false,
+              taskItemId: Number(taskId),
+            })
+          )
+        );
+      }
+      
+
+      onSuccess();
+    } catch (err) {
+      console.error("Submit failed:", err);
+    }
+  };
+
+return (
+  <form
+    onSubmit={handleSubmit}
+    className="flex flex-col max-h-[90vh] w-full max-w-lg space-y-0 bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden"
+  >
+    {/* Header */}
+    <div className="p-6 border-b border-slate-50">
+      <h2 className="text-xl font-bold text-slate-800">
+        {initialData ? "Edit Task" : "Create Task"}
+      </h2>
+      <p className="text-sm text-slate-400">
+        Manage your task details and subtasks
+      </p>
+    </div>
+
+    {/* Title */}
+    <div className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar">
+    <div>
+      <label className="block text-sm font-semibold text-slate-600 mb-1">
+        Title
+      </label>
+      <input
+        required
+        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition"
+        value={formData.title}
+        onChange={(e) =>
+          setFormData({ ...formData, title: e.target.value })
+        }
+        placeholder="Enter task title..."
+      />
+    </div>
+
+    {/* Description */}
+    <div>
+      <label className="block text-sm font-semibold text-slate-600 mb-1">
+        Description
+      </label>
+      <textarea
+        required
+        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition min-h-[120px]"
+        value={formData.description}
+        onChange={(e) =>
+          setFormData({ ...formData, description: e.target.value })
+        }
+        placeholder="Describe the task..."
+      />
+    </div>
+
+    {/* Status & Priority */}
+    <div className="grid grid-cols-2 gap-4">
+      <div>
+        <label className="block text-sm font-semibold text-slate-600 mb-1">
+          Status
+        </label>
+        <select
+          className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-blue-400 transition"
+          value={formData.status}
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              status: Number(e.target.value),
+            })
+          }
+        >
+          <option value={0}>Upcoming</option>
+          <option value={1}>In Progress</option>
+          <option value={2}>Done</option>
+        </select>
       </div>
 
-      {/* Status & Priority Grid */}
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">
-            Status
-          </label>
-          <select
-            className="w-full bg-white/50 border border-slate-200 rounded-xl px-4 py-2 outline-none"
-            value={formData.status}
-            onChange={(e) =>
-              setFormData({ ...formData, status: Number(e.target.value) })
-            }
-          >
-            <option value={0}>Upcoming</option>
-            <option value={1}>InProgress</option>
-            <option value={2}>Done</option>
-          </select>
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">
-            Priority
-          </label>
-          <select
-            className="w-full bg-white/50 border border-slate-200 rounded-xl px-4 py-2 outline-none"
-            value={formData.priority}
-            onChange={(e) =>
-              setFormData({ ...formData, priority: Number(e.target.value) })
-            }
-          >
-            <option value={0}>Low</option>
-            <option value={1}>Medium</option>
-            <option value={2}>Urgent</option>
-          </select>
-        </div>
+      <div>
+        <label className="block text-sm font-semibold text-slate-600 mb-1">
+          Priority
+        </label>
+        <select
+          className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-blue-400 transition"
+          value={formData.priority}
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              priority: Number(e.target.value),
+            })
+          }
+        >
+          <option value={0}>Low</option>
+          <option value={1}>Medium</option>
+          <option value={2}>Urgent</option>
+        </select>
       </div>
+    </div>
 
-      {/* Subtasks Section */}
-      <div className="bg-slate-50/50 p-4 rounded-2xl border border-slate-100">
-        <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">
+    {/* Subtasks */}
+    <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+      <div className="flex items-center justify-between mb-3">
+        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">
           Subtasks
         </label>
-        <div className="space-y-2 mb-3">
-          {formData.subTasks.map((st, index) => (
-            <div
-              key={index}
-              className="flex items-center gap-3 p-3 bg-white rounded-xl border border-slate-100 shadow-sm"
-            >
-              <input
-                type="checkbox"
-                checked={st.isCompleted}
-                onChange={() => {
-                  const updated = [...formData.subTasks];
-                  updated[index].isCompleted = !updated[index].isCompleted;
-                  setFormData({ ...formData, subTasks: updated });
-                }}
-                className="w-5 h-5 rounded-md border-slate-300 text-blue-600 focus:ring-blue-500"
-              />
-              <span
-                className={`flex-1 text-sm ${st.isCompleted ? "text-slate-400 line-through" : "text-slate-700 font-medium"}`}
-              >
-                {st.title}
-              </span>
-              <button
-                type="button"
-                onClick={() => removeSubTask(index)}
-                className="text-slate-400 hover:text-red-500"
-              >
-                ✕
-              </button>
-            </div>
-          ))}
-        </div>
-        <div className="flex gap-2">
-          <input
-            className="flex-1 bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-sm outline-none"
-            placeholder="Add a step..."
-            value={subTaskInput}
-            onChange={(e) => setSubTaskInput(e.target.value)}
-            onKeyDown={(e) =>
-              e.key === "Enter" && (e.preventDefault(), addSubTask(e))
-            }
-          />
-          <button
-            type="button"
-            onClick={(e) => addSubTask(e)}
-            className="bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg text-xs font-bold"
-          >
-            Add
-          </button>
-        </div>
+        <span className="text-xs text-slate-400">
+          {formData.subTasks.length} items
+        </span>
       </div>
 
-      <button
-        type="submit"
-        disabled={create.isPending || update.isPending}
-        className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-2xl transition-all shadow-lg shadow-blue-200 disabled:bg-slate-300"
-      >
-        {create.isPending || update.isPending
-          ? "Saving..."
-          : initialData
-            ? "Update Task"
-            : "Create Task"}
-      </button>
-    </form>
-  );
+      {/* Subtask List */}
+      <div className="space-y-2 mb-4 max-h-40 overflow-y-auto pr-1">
+        {formData.subTasks.map((st, index) => (
+          <div
+            key={index}
+            className="flex items-center gap-3 p-2.5 bg-white rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition"
+          >
+            <input
+              type="checkbox"
+              checked={st.isCompleted}
+              onChange={() => {
+                const updated = [...formData.subTasks];
+                updated[index].isCompleted = !updated[index].isCompleted;
+                setFormData({ ...formData, subTasks: updated });
+              }}
+              className="w-5 h-5 accent-blue-500 cursor-pointer"
+            />
+
+            <span
+              className={`flex-1 text-sm ${
+                st.isCompleted
+                  ? "text-slate-400 line-through"
+                  : "text-slate-700"
+              }`}
+            >
+              {st.title}
+            </span>
+
+            <button
+              type="button"
+              onClick={() => removeSubTask(index)}
+              className="text-slate-400 hover:text-red-500 transition"
+            >
+              ✕
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {/* Add Subtask */}
+      <div className="flex gap-2">
+        <input
+          className="flex-1 bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400"
+          placeholder="Add a subtask..."
+          value={subTaskInput}
+          onChange={(e) => setSubTaskInput(e.target.value)}
+          onKeyDown={(e) =>
+            e.key === "Enter" && (e.preventDefault(), addSubTask(e))
+          }
+        />
+
+        <button
+          type="button"
+          onClick={(e) => addSubTask(e)}
+          className="bg-blue-100 hover:bg-blue-200 text-blue-600 px-4 py-2 rounded-lg text-sm font-semibold transition"
+        >
+          Add
+        </button>
+      </div>
+    </div>
+    </div>
+
+
+    {/* Submit */}
+    <div className="p-6 bg-white border-t border-slate-50">
+    <button
+      type="submit"
+      disabled={create.isPending || update.isPending}
+      className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold py-3 rounded-2xl transition-all shadow-md disabled:opacity-60"
+    >
+      {create.isPending || update.isPending
+        ? "Saving..."
+        : initialData
+        ? "Update Task"
+        : "Create Task"}
+    </button>
+    </div>
+
+  </form>
+);
 }

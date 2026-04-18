@@ -50,7 +50,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<TaskItem>>(_taskItemDal.GetTasksWithDetails());
         }
 
-        public IResult Add(TaskItemCreateDto dto)
+        public IDataResult<TaskItem> Add(TaskItemCreateDto dto)
         {
             var task = new TaskItem
             {
@@ -61,11 +61,16 @@ namespace Business.Concrete
                 Priority = dto.Priority,
                 DueDate = dto.DueDate
             };
+
             _taskItemDal.Create(task);
 
             LogActivity(task.Id, $"Task '{task.Title}' created");
+            Console.WriteLine($"CREATED TASK ID: {task.Id}");
 
-            return new SuccessResult(Messages.TaskAdded);
+            return new SuccessDataResult<TaskItem>(
+                task,
+                Messages.TaskAdded
+            );
         }
 
         public IResult Update(TaskItemUpdateDto dto)

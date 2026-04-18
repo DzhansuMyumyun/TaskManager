@@ -38,12 +38,14 @@ namespace Business.Concrete
         {
             var subTask = new SubTask
             {
-                TaskItemId = dto.TaskId,
-                Title = dto.Title
+                Title = dto.Title,
+                IsCompleted = dto.IsCompleted,
+                TaskItemId = dto.TaskItemId
 
             };
             _subTaskDal.Create(subTask);
             return new SuccessResult(Messages.SubTaskAdded);
+
         }
 
         public IResult Update(SubTaskUpdateDto dto)

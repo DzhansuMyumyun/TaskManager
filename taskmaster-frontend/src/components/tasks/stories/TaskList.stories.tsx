@@ -5,14 +5,6 @@ import type { Task } from "../../../types/taskTypes";
 const meta: Meta = {
   title: "Features/Tasks/TaskGrid",
   component: TaskCard,
-  // This decorator wraps our cards in a grid so we can see the layout
-  // decorators: [
-  //   (Story) => (
-  //     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-10 bg-slate-100 min-h-screen">
-  //       <Story />
-  //     </div>
-  //   ),
-  // ],
 };
 
 export default meta;

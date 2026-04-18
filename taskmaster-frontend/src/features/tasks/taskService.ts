@@ -1,5 +1,6 @@
 import api from "../../api/axios";
-import type { Task,CreateTaskDto } from "../../types/taskTypes";
+import type { CreateTaskDto, Task } from "../../types/taskTypes";
+
 
 interface ApiResponse<T> {
   data: T;
@@ -28,17 +29,16 @@ export const createTask = async (
 };
 
 // UPDATE
-export const updateTask = async (
-  id: number,
-  task: Partial<Task>
-): Promise<Task> => {
-  const response = await api.put<ApiResponse<Task>>(`/TaskItems`, task);
-  //const response = await api.put<ApiResponse<Task>>(`/tasks/${id}`, task);
-  return response.data.data;
+export const updateTask = async (id: number, data: Partial<Task>) => {
+  // We explicitly spread data and ensure the ID is included and is a number
+  const response = await api.put(`/TaskItems/${id}`, { 
+    ...data, 
+    id: Number(id) 
+  });
+  return response.data;
 };
 
 // DELETE task
 export const deleteTask = async (id: number): Promise<void> => {
-  //await api.delete(`/TaskItems/${id}`);
   await api.delete(`/TaskItems/${id}`);
 };

@@ -22,8 +22,14 @@ public class SubTasksController : ControllerBase
     [HttpPost]
     public IActionResult Add([FromBody] SubTaskCreateDto dto) => Ok(_subTaskService.Add(dto));
 
-    [HttpPut]
-    public IActionResult Update([FromBody] SubTaskUpdateDto dto) => Ok(_subTaskService.Update(dto));
+    [HttpPut("{id}")]
+    public IActionResult Update(int id, [FromBody] SubTaskUpdateDto dto)
+    {
+        if (id != dto.Id)
+            return BadRequest();
+
+        return Ok(_subTaskService.Update(dto));
+    }
 
     [HttpDelete("{id}")]
     public IActionResult Delete(int id) => Ok(_subTaskService.Delete(id));

@@ -23,8 +23,10 @@ export default function TaskCard({ task, onDelete, onToggle }: Props) {
  const priority = priorityStyleColors[task.priority] || priorityStyleColors[1];
 
   return (
-<div className="group relative overflow-hidden bg-white/60 backdrop-blur-md border border-white/40 p-5 rounded-2xl shadow-sm transition-all hover:shadow-md hover:bg-white/80">
-      
+    <div 
+      onClick={() => onToggle(task.id.toString())} 
+      className="group cursor-pointer relative overflow-hidden bg-white/60 backdrop-blur-md border border-white/40 p-5 rounded-2xl shadow-sm transition-all hover:shadow-md hover:bg-white/80"
+    >      
       {/* Priority Indicator Line */}
       <div className={`absolute left-0 top-0 h-full w-1.5 ${statusStyleColors[task.status] || 'bg-slate-200'}`} />
       
@@ -39,7 +41,10 @@ export default function TaskCard({ task, onDelete, onToggle }: Props) {
         </div>
         
         <button 
-          onClick={() => onDelete(task.id)}
+          onClick={(e) => {
+            e.stopPropagation(); 
+            onDelete(task.id);
+          }}
           className="ml-2 p-1.5 opacity-0 group-hover:opacity-100 hover:bg-red-50 rounded-lg text-slate-400 hover:text-red-500 transition-all"
           aria-label="Delete task"
         >
