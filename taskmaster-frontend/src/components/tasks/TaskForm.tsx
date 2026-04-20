@@ -229,7 +229,7 @@ return (
             })
           }
         >
-          <option value={0}>Upcoming</option>
+          <option value={0}>To Do</option>
           <option value={1}>In Progress</option>
           <option value={2}>Done</option>
         </select>
