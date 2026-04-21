@@ -21,13 +21,6 @@ const create = useMutation({
     },
   });
 
-  const updateStatus = useMutation({
-    mutationFn: ({ taskId, newStatus }: { taskId: number; newStatus: number }) => 
-      axios.patch(`/api/TaskItems/${taskId}`, { status: newStatus }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['tasks'] });
-    }
-  });
 
   const remove = useMutation({
     mutationFn: deleteTask,
