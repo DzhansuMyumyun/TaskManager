@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createTask, deleteTask, updateTask } from "./taskService";
 import type { Task, CreateTaskDto } from "../../types/taskTypes";
+import axios from "axios";
 
 export const useTaskMutations = () => {
   const queryClient = useQueryClient();
@@ -18,6 +19,14 @@ const create = useMutation({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
     },
+  });
+
+  const updateStatus = useMutation({
+    mutationFn: ({ taskId, newStatus }: { taskId: number; newStatus: number }) => 
+      axios.patch(`/api/TaskItems/${taskId}`, { status: newStatus }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
+    }
   });
 
   const remove = useMutation({

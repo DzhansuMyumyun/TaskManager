@@ -13,12 +13,14 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^18.0.1",
     "@tanstack/react-query": "^5.96.1",
     "axios": "^1.14.0",
     "clsx": "^2.1.1",
     "lucide-react": "^1.8.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "react-hot-toast": "^2.6.0",
     "react-router-dom": "^7.14.0"
   },
   "devDependencies": {

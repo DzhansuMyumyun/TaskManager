@@ -2,6 +2,7 @@ import { useTasks } from "./features/tasks/useTasks";
 import { useTaskMutations } from "./features/tasks/useTaskMutations";
 import TaskList from "./components/tasks/TaskList";
 import TaskInfo from "./components/tasks/TaskInfo";
+import { Toaster } from 'react-hot-toast';
 
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
             <TaskInfo projectId={currentProjectId}/>
           </section>
           <section>
+            <Toaster position="bottom-right" />
             <TaskList />
           </section>
         </main>

@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import api from "../../api/axios";
 import type { CreateTaskDto, Task } from "../../types/taskTypes";
 
@@ -24,21 +25,34 @@ export const getTaskById = async (id: number): Promise<Task> => {
 export const createTask = async (
   task: CreateTaskDto
 ): Promise<Task> => {
-  const response = await api.post<Task>("/TaskItems", task);
-  return response.data;
+  const response = await api.post<ApiResponse<Task>>("/TaskItems", task);
+  const { data, message, success } = response.data;
+
+  if (success && message) {
+    toast.success(message);
+  }
+  return data;
 };
 
 // UPDATE
 export const updateTask = async (id: number, data: Partial<Task>) => {
-  // We explicitly spread data and ensure the ID is included and is a number
-  const response = await api.put(`/TaskItems/${id}`, { 
+  const response = await api.put<ApiResponse<Task>>(`/TaskItems/${id}`, { 
     ...data, 
     id: Number(id) 
   });
-  return response.data;
+
+  if (response.data.success) {
+    toast.success(response.data.message || "Updated successfully");
+  }
+
+  return response.data.data;
 };
 
 // DELETE task
 export const deleteTask = async (id: number): Promise<void> => {
-  await api.delete(`/TaskItems/${id}`);
+  const response = await api.delete<ApiResponse<null>>(`/TaskItems/${id}`);
+  
+  if (response.data.success) {
+    toast.success(response.data.message || "Task deleted");
+  }
 };

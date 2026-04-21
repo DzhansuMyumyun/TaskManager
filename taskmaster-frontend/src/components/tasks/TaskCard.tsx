@@ -15,12 +15,14 @@ export default function TaskCard({ task, onDelete, onToggle }: Props) {
   };
 
     const statusStyleColors: Record<number, string> = {
-    0: 'bg-gray-400', // Upcoming 
+    0: 'bg-gray-400', // To do 
     1: 'bg-blue-500',   // In Progress
     2: 'bg-emerald-400',    // Done
   };
 
  const priority = priorityStyleColors[task.priority] || priorityStyleColors[1];
+ const allSubtasks = task.subTasks.length;
+ const subtaskComplete = task.subTasks.filter(s => s.isCompleted === true).length;
 
   return (
     <div 
@@ -37,6 +39,9 @@ export default function TaskCard({ task, onDelete, onToggle }: Props) {
           </h2>
           <p className="text-xs text-slate-500 mt-1.5 line-clamp-2 leading-relaxed">
             {task.description}
+          </p>
+          <p className="text-xs text-slate-500 pt-5 mt-1.5 line-clamp-2 leading-relaxed">
+            ✔ {subtaskComplete}/{allSubtasks} subtasks completed
           </p>
         </div>
         
