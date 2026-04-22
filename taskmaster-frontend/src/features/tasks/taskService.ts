@@ -10,10 +10,19 @@ interface ApiResponse<T> {
 }
 
 // GET tasks
-export const getTasks = async (): Promise<Task[]> =>{
-    const response = await api.get<{ data: Task[] }>("/TaskItems");
-    return response.data.data;
-}
+export const getTasks = async (projectId?: number): Promise<Task[]> => {
+  const url = projectId ? `/TaskItems?projectId=${projectId}` : "/TaskItems";
+  
+  const response = await api.get<{ data: Task[] }>(url);
+  return response.data.data;
+};
+
+// GET all projects for the dropdown
+export const getProjects = async (): Promise<{id: number, name: string}[]> => {
+  const response = await api.get<{ data: {id: number, name: string}[] }>("/Projects");
+  return response.data.data;
+};
+
 
 // GET single task
 export const getTaskById = async (id: number): Promise<Task> => {
@@ -33,6 +42,8 @@ export const createTask = async (
   }
   return data;
 };
+
+
 
 // UPDATE
 export const updateTask = async (id: number, data: Partial<Task>) => {

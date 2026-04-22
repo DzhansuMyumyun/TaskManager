@@ -8,10 +8,15 @@ import TaskForm from "./TaskForm";
 import type { Task } from "../../types/taskTypes";
 import {  Check, Columns } from "lucide-react";
 
-export default function TaskList() {
+interface TaskListProps {
+  projectId?: number;
+}
+
+
+export default function TaskList({ projectId }: TaskListProps) {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { data: tasks, isLoading, isError, error } = useTasks();
+  const { data: tasks, isLoading, isError, error } = useTasks(projectId);
   const { remove } = useTaskMutations();
   const { update } = useTaskMutations();
 
@@ -110,6 +115,7 @@ export default function TaskList() {
             setIsModalOpen(false);
             setSelectedTask(null);
           }}
+          currentProjectId={projectId!}
         />
       </Modal>
 

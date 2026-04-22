@@ -7,9 +7,11 @@ import type { CreateTaskDto, Task } from "../../types/taskTypes";
 export default function TaskForm({
   onSuccess,
   initialData,
+  currentProjectId,
 }: {
   onSuccess: () => void;
   initialData?: Task | null;
+  currentProjectId:number; 
 }) {
   const { create, update } = useTaskMutations();
   const [subTaskInput, setSubTaskInput] = useState("");
@@ -18,7 +20,7 @@ export default function TaskForm({
     description: "",
     priority: 1,
     status: 0,
-    projectId: 2,
+    projectId: currentProjectId,
     dueDate: new Date().toISOString().split("T")[0],
     subTasks: [] as Partial<SubTask>[],
   });
@@ -39,8 +41,11 @@ export default function TaskForm({
           : new Date().toISOString().split("T")[0],
         subTasks: initialData.subTasks || []
       });
+    }else {
+      // Reset form for "Create Mode" when switching projects
+      setFormData(prev => ({ ...prev, projectId: currentProjectId }));
     }
-  }, [initialData]);
+  }, [initialData,currentProjectId]);
 
 
  const addSubTask = (e: React.MouseEvent | React.KeyboardEvent) => {

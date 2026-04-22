@@ -9,6 +9,7 @@ using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using Entities.DTOs;
+using Entities.DTOs.SubtaskDTOs;
 using Entities.DTOs.TaskDTOs;
 using FluentValidation;
 using System;
@@ -44,10 +45,25 @@ namespace Business.Concrete
             return new SuccessDataResult<List<TaskItem>>(_taskItemDal.GetAll(t => (int)t.Status == id));
         }
 
-        public IDataResult<List<TaskItem>> GetTasksWithDetails()
+        public IDataResult<List<TaskItemUpdateDto>> GetTasksWithDetails(int? projectId)
         {
-           
-            return new SuccessDataResult<List<TaskItem>>(_taskItemDal.GetTasksWithDetails());
+            var tasks = _taskItemDal.GetTasksWithDetails(t => !projectId.HasValue || t.ProjectId == projectId);
+
+            var mappedTasks = tasks.Select(t => new TaskItemUpdateDto
+            {
+                Id = t.Id,
+                Title = t.Title,
+                Status = t.Status,
+                Priority = t.Priority,
+                SubTasks = t.SubTasks.Select(s => new SubTaskUpdateDto
+                {
+                    Id = s.Id,
+                    Title = s.Title,
+                    IsCompleted = s.IsCompleted
+                }).ToList()
+            }).ToList();
+
+            return new SuccessDataResult<List<TaskItemUpdateDto>>(mappedTasks);
         }
 
         public IDataResult<TaskItem> Add(TaskItemCreateDto dto)

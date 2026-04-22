@@ -15,11 +15,10 @@ public class TaskItemsController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetAll()
+    public IActionResult GetAll(int? projectId) // Add the optional parameter here
     {
-        // Change this from _taskItemService.GetAll() 
-        // to your new method:
-        var result = _taskItemService.GetTasksWithDetails();
+
+        var result = _taskItemService.GetTasksWithDetails(projectId);
 
         if (result.Success)
         {

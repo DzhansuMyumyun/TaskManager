@@ -14,7 +14,8 @@ namespace Entities.DTOs.TaskDTOs
         public string? Description { get; set; }
         public TaskItem.TaskStatus Status { get; set; }
         public TaskItem.PriorityStatus Priority { get; set; }
+        public int ProjectId { get; set; } // Add this line!
         public DateTime? DueDate { get; set; }
-        public List<SubTaskUpdateDto> SubTasks { get; set; }
+        public List<SubTaskUpdateDto> SubTasks { get; set; } = new List<SubTaskUpdateDto>();
     }
 }

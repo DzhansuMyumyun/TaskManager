@@ -3,9 +3,7 @@ import type { Task } from "../../types/taskTypes";
 import { StatCard } from "./StatCard";
 
 export default function TaskStats({ projectId }: { projectId: number }) {
-  const { data: allTasks = [], isLoading } = useTasks();
-
-  const projectTasks = allTasks.filter((t: Task) => t.projectId === projectId);
+const { data: projectTasks = [], isLoading } = useTasks(projectId);
   
   // Calculations
   const completedCount = projectTasks.filter(t => t.status === 2).length;

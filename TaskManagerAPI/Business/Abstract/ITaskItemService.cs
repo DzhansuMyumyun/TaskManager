@@ -12,7 +12,7 @@ namespace Business.Abstract
         IDataResult<List<TaskItem>> GetAll();
         IDataResult<TaskItem> GetById(int id);
         IDataResult<List<TaskItem>> GetByStatusId(int id);
-        IDataResult<List<TaskItem>> GetTasksWithDetails();
+        IDataResult<List<TaskItemUpdateDto>> GetTasksWithDetails(int? projectId = null); 
         IDataResult<TaskItem> Add(TaskItemCreateDto dto);
         IResult Update(TaskItemUpdateDto dto);
         IResult Delete(int taskId);

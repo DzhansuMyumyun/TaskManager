@@ -10,16 +10,17 @@ using System.Text;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfTaskItemDal: EfEntityRepositoryBase<TaskItem,TaskManagerContext>, ITaskDal
+    public class EfTaskItemDal : EfEntityRepositoryBase<TaskItem, TaskManagerContext>, ITaskDal
     {
 
-        public List<TaskItem> GetTasksWithDetails()
+        public List<TaskItem> GetTasksWithDetails(Expression<Func<TaskItem, bool>> filter)
         {
             using (var context = new TaskManagerContext())
             {
                 return context.TaskItems
-                              .Include(t => t.SubTasks)
-                              .ToList();
+                    .Include(t => t.SubTasks) // This brings the subtask data from SQL
+                    .Where(filter)
+                    .ToList();
             }
         }
     }
