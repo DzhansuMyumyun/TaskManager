@@ -66,7 +66,6 @@ types/
 
 ### Backend Structure
 
-```
 Controllers/
 Services/
 DataAccess/
@@ -79,14 +78,121 @@ DTOs/
 
 ---
 
-🔄 Key Implementation Details
-  🧲 Drag & Drop System
+## 🔄 Key Implementation Details
+🧲 Drag & Drop System
 - Built using DnD Kit
 - Tasks can be moved between status columns
 - State updates instantly with backend synchronization
 
 
+---
+
+## 📊 Subtask Progress Tracking
+Each task dynamically calculates progress:
+
+completedSubtasks / totalSubtasks
+
+- Automatically updates UI
+- Improves task visibility and usability
+
+---
+
+## ⚡ Optimistic Updates
+- UI updates immediately before server response
+- Provides a smoother user experience
+- Handles async state efficiently with React Query
 
 
+---
+## 🔗 Relational Data Handling
+- Tasks and subtasks are managed separately
+- Subtasks are linked via taskItemId
+- Ensures data integrity and scalability
+
+---
+## ⚠️ Challenges & Solutions
+❌ Issue: Subtasks failing due to foreign key constraint
+
+Problem:
+Subtasks were being created before the parent task ID existed.
+
+Solution:
+- First create the task
+- Extract returned taskId
+- Then create subtasks using that ID
 
 
+❌ Issue: API response did not return created entity
+
+Solution:
+- Updated backend to return SuccessDataResult<TaskItem>
+- Enabled frontend to correctly access taskId
+
+
+❌ Issue: Update and Subtask Sync
+
+Solution:
+- Separated task update and subtask operations
+- Implemented:
+  - create
+  - update
+  - delete logic for subtasks
+ 
+---
+## 🧪 Testing & UI Development
+- 📘 Storybook used for isolated UI development
+- 🧪 Unit tests (in progress)
+- Focus on reusable and testable components
+
+---
+## 🚀 Getting Started
+1. Clone the repository
+ ```bash
+   git clone https://github.com/your-username/taskmaster.git
+   cd taskmaster
+```
+   
+2. Frontend Setup
+ ```bash
+cd taskmaster-frontend
+npm install
+npm run dev
+```
+
+3. Backend Setup
+ ```bash
+cd taskmaster-backend
+dotnet restore
+dotnet run
+```
+   
+4. Environment Variables
+Create .env file in frontend if needed:
+ ```bash
+VITE_API_URL=http://localhost:5000/api
+```
+
+---
+## 📈 Future Improvements
+- 🔄 Real-time updates (WebSockets / SignalR)
+- 👥 User authentication & roles
+- 📅 Calendar view for tasks
+- 📱 Mobile responsiveness improvements
+- ⚡ Advanced filtering & search
+- 🧠 AI-assisted task suggestions (future idea)
+
+---
+## 💡 What I Learned
+- Managing relational data between frontend and backend
+- Handling async workflows and optimistic updates
+- Structuring scalable React applications
+- Improving UX with feedback systems (toasts, loading states)
+- Debugging real-world API and database issues
+
+---
+### 👤 Author
+Dzhansu Myumyun
+
+---
+### ⭐ If you like this project
+Give it a star ⭐ — it helps a lot!
