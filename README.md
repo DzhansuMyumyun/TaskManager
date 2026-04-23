@@ -18,7 +18,8 @@ A modern **kanban-style task management application** built with React and .NET,
 
 ## 🖥️ Demo
 
-> Add a GIF or short video here (highly recommended)
+<video src="https://i.imgur.com/EO2X8nI.mp4" controls="controls" style="max-width: 100%;">
+</video>
 
 ---
 
