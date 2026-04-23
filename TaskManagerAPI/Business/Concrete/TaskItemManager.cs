@@ -54,6 +54,7 @@ namespace Business.Concrete
                 Id = t.Id,
                 Title = t.Title,
                 Status = t.Status,
+                Description = t.Description,
                 Priority = t.Priority,
                 SubTasks = t.SubTasks.Select(s => new SubTaskUpdateDto
                 {

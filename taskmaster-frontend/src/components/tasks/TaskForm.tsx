@@ -3,6 +3,7 @@ import { useTaskMutations } from "../../features/tasks/useTaskMutations";
 import { createSubTask, updateSubTask,deleteSubTask } from "../../features/subTask/subTaskService";
 import type { SubTask } from "../../types/subTask";
 import type { CreateTaskDto, Task } from "../../types/taskTypes";
+import { QueryClient, useQueryClient } from "@tanstack/react-query";
 
 export default function TaskForm({
   onSuccess,
@@ -133,7 +134,7 @@ export default function TaskForm({
         })
       );
     } else {
-      // ✅ 4. CREATE NEW TASK
+      // CREATE NEW TASK
         const createdTask: any = await new Promise((resolve, reject) => {
           create.mutate(formData as CreateTaskDto, {
             onSuccess: (data) => resolve(data),
@@ -145,13 +146,13 @@ export default function TaskForm({
 
         if (!taskId) throw new Error("Task ID was not returned from API");
 
-        // ✅ CREATE SUBTASKS AFTER TASK EXISTS
+        // CREATE SUBTASKS AFTER TASK EXISTS
         if (!taskId) {
         throw new Error("Task ID was not returned from API");
         }
       
 
-        // ✅ 5. CREATE SUBTASKS FOR NEW TASK
+        // CREATE SUBTASKS FOR NEW TASK
         await Promise.all(
           formData.subTasks.map((st) =>
             createSubTask({
@@ -162,8 +163,8 @@ export default function TaskForm({
           )
         );
       }
-      
-
+      const queryClient = useQueryClient();
+      queryClient.invalidateQueries({ queryKey: ["tasks", currentProjectId] });
       onSuccess();
     } catch (err) {
       console.error("Submit failed:", err);

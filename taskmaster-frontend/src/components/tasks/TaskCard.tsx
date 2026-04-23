@@ -1,4 +1,5 @@
 import type { Task } from "../../types/taskTypes";
+import { memo } from 'react';
 
 interface Props {
   task: Task;
@@ -6,7 +7,7 @@ interface Props {
   onToggle: (id:string) => void;
 }
 
-export default function TaskCard({ task, onDelete, onToggle }: Props) {
+const TaskCard = memo(({ task, onDelete, onToggle }: Props) => {
 
   const priorityStyleColors: Record<number, { label: string, color: string, dot: string }> = {
     0: { label: "Low", color: "bg-emerald-100 text-emerald-600", dot: "bg-emerald-400" },
@@ -70,4 +71,8 @@ export default function TaskCard({ task, onDelete, onToggle }: Props) {
       </div>
     </div>
   );
-}
+});
+export default TaskCard;
+
+
+
