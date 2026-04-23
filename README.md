@@ -67,14 +67,23 @@ types/
 ### Backend Structure
 
 ```
-
 Controllers/
 Services/
 DataAccess/
 Entities/
 DTOs/
 
+- DTO-based communication between client and server
+- Business logic isolated in service layer
+- Clean separation of data access and logic
 
+---
+
+🔄 Key Implementation Details
+  🧲 Drag & Drop System
+- Built using DnD Kit
+- Tasks can be moved between status columns
+- State updates instantly with backend synchronization
 
 
 
