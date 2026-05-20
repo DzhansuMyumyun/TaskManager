@@ -3,47 +3,35 @@
   "WorkspaceRootPath": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{45E8AD2D-F6CC-99C0-B6AF-489676982DA4}|DataAccess\\DataAccess.csproj|c:\\users\\dzhan\\onedrive\\documents\\github\\taskmanager\\taskmanagerapi\\dataaccess\\concrete\\entityframework\\eftaskitemdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{45E8AD2D-F6CC-99C0-B6AF-489676982DA4}|DataAccess\\DataAccess.csproj|solutionrelative:dataaccess\\concrete\\entityframework\\eftaskitemdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C5827C10-32D2-D72F-4639-49B48E591E74}|Business\\Business.csproj|c:\\users\\dzhan\\onedrive\\documents\\github\\taskmanager\\taskmanagerapi\\business\\abstract\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C5827C10-32D2-D72F-4639-49B48E591E74}|Business\\Business.csproj|solutionrelative:business\\abstract\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C5827C10-32D2-D72F-4639-49B48E591E74}|Business\\Business.csproj|c:\\users\\dzhan\\onedrive\\documents\\github\\taskmanager\\taskmanagerapi\\business\\concrete\\taskitemmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5827C10-32D2-D72F-4639-49B48E591E74}|Business\\Business.csproj|solutionrelative:business\\concrete\\taskitemmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{ED4D41BB-B351-45EC-944B-1A2658F3F03C}|TaskManagerWebAPI\\TaskManagerWebAPI.csproj|c:\\users\\dzhan\\onedrive\\documents\\github\\taskmanager\\taskmanagerapi\\taskmanagerwebapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ED4D41BB-B351-45EC-944B-1A2658F3F03C}|TaskManagerWebAPI\\TaskManagerWebAPI.csproj|solutionrelative:taskmanagerwebapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{45E8AD2D-F6CC-99C0-B6AF-489676982DA4}|DataAccess\\DataAccess.csproj|c:\\users\\dzhan\\onedrive\\documents\\github\\taskmanager\\taskmanagerapi\\dataaccess\\abstract\\itaskdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{45E8AD2D-F6CC-99C0-B6AF-489676982DA4}|DataAccess\\DataAccess.csproj|solutionrelative:dataaccess\\abstract\\itaskdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C5827C10-32D2-D72F-4639-49B48E591E74}|Business\\Business.csproj|c:\\users\\dzhan\\onedrive\\documents\\github\\taskmanager\\taskmanagerapi\\business\\concrete\\authmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C5827C10-32D2-D72F-4639-49B48E591E74}|Business\\Business.csproj|solutionrelative:business\\concrete\\authmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/TaskManager/True/SqlTable/dbo.Users.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/TaskManager/True/SqlTable/dbo.Projects.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{95DE3BD9-A587-35A9-17E0-3C34D2A57441}|Entities\\Entities.csproj|c:\\users\\dzhan\\onedrive\\documents\\github\\taskmanager\\taskmanagerapi\\entities\\dtos\\taskdtos\\taskitemupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{95DE3BD9-A587-35A9-17E0-3C34D2A57441}|Entities\\Entities.csproj|solutionrelative:entities\\dtos\\taskdtos\\taskitemupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{ED4D41BB-B351-45EC-944B-1A2658F3F03C}|TaskManagerWebAPI\\TaskManagerWebAPI.csproj|c:\\users\\dzhan\\onedrive\\documents\\github\\taskmanager\\taskmanagerapi\\taskmanagerwebapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ED4D41BB-B351-45EC-944B-1A2658F3F03C}|TaskManagerWebAPI\\TaskManagerWebAPI.csproj|solutionrelative:taskmanagerwebapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{95DE3BD9-A587-35A9-17E0-3C34D2A57441}|Entities\\Entities.csproj|c:\\users\\dzhan\\onedrive\\documents\\github\\taskmanager\\taskmanagerapi\\entities\\dtos\\taskdtos\\taskitemcreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{95DE3BD9-A587-35A9-17E0-3C34D2A57441}|Entities\\Entities.csproj|solutionrelative:entities\\dtos\\taskdtos\\taskitemcreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C5827C10-32D2-D72F-4639-49B48E591E74}|Business\\Business.csproj|c:\\users\\dzhan\\onedrive\\documents\\github\\taskmanager\\taskmanagerapi\\business\\abstract\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C5827C10-32D2-D72F-4639-49B48E591E74}|Business\\Business.csproj|solutionrelative:business\\abstract\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C5827C10-32D2-D72F-4639-49B48E591E74}|Business\\Business.csproj|c:\\users\\dzhan\\onedrive\\documents\\github\\taskmanager\\taskmanagerapi\\business\\concrete\\subtaskmanager .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5827C10-32D2-D72F-4639-49B48E591E74}|Business\\Business.csproj|solutionrelative:business\\concrete\\subtaskmanager .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{ED4D41BB-B351-45EC-944B-1A2658F3F03C}|TaskManagerWebAPI\\TaskManagerWebAPI.csproj|c:\\users\\dzhan\\onedrive\\documents\\github\\taskmanager\\taskmanagerapi\\taskmanagerwebapi\\controllers\\projectscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ED4D41BB-B351-45EC-944B-1A2658F3F03C}|TaskManagerWebAPI\\TaskManagerWebAPI.csproj|solutionrelative:taskmanagerwebapi\\controllers\\projectscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{ED4D41BB-B351-45EC-944B-1A2658F3F03C}|TaskManagerWebAPI\\TaskManagerWebAPI.csproj|c:\\users\\dzhan\\onedrive\\documents\\github\\taskmanager\\taskmanagerapi\\taskmanagerwebapi\\controllers\\subtaskscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ED4D41BB-B351-45EC-944B-1A2658F3F03C}|TaskManagerWebAPI\\TaskManagerWebAPI.csproj|solutionrelative:taskmanagerwebapi\\controllers\\subtaskscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{20A3F636-E92B-4E08-86B2-835DADEA7FF4}|Core\\Core.csproj|c:\\users\\dzhan\\onedrive\\documents\\github\\taskmanager\\taskmanagerapi\\core\\dataaccess\\ientityrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{20A3F636-E92B-4E08-86B2-835DADEA7FF4}|Core\\Core.csproj|solutionrelative:core\\dataaccess\\ientityrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{95DE3BD9-A587-35A9-17E0-3C34D2A57441}|Entities\\Entities.csproj|c:\\users\\dzhan\\onedrive\\documents\\github\\taskmanager\\taskmanagerapi\\entities\\concrete\\taskitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{95DE3BD9-A587-35A9-17E0-3C34D2A57441}|Entities\\Entities.csproj|solutionrelative:entities\\concrete\\taskitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{95DE3BD9-A587-35A9-17E0-3C34D2A57441}|Entities\\Entities.csproj|c:\\users\\dzhan\\onedrive\\documents\\github\\taskmanager\\taskmanagerapi\\entities\\concrete\\projectcategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{95DE3BD9-A587-35A9-17E0-3C34D2A57441}|Entities\\Entities.csproj|solutionrelative:entities\\concrete\\projectcategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C5827C10-32D2-D72F-4639-49B48E591E74}|Business\\Business.csproj|c:\\users\\dzhan\\onedrive\\documents\\github\\taskmanager\\taskmanagerapi\\business\\concrete\\usermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C5827C10-32D2-D72F-4639-49B48E591E74}|Business\\Business.csproj|solutionrelative:business\\concrete\\usermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -53,7 +41,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -65,141 +53,97 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "TaskItemUpdateDto.cs",
-              "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Entities\\DTOs\\TaskDTOs\\TaskItemUpdateDto.cs",
-              "RelativeDocumentMoniker": "Entities\\DTOs\\TaskDTOs\\TaskItemUpdateDto.cs",
-              "ToolTip": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Entities\\DTOs\\TaskDTOs\\TaskItemUpdateDto.cs",
-              "RelativeToolTip": "Entities\\DTOs\\TaskDTOs\\TaskItemUpdateDto.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAA8AAAA9AAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "dbo.Projects.sql",
+              "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/TaskManager/True/SqlTable/dbo.Projects.sql",
+              "ToolTip": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/TaskManager/True/SqlTable/dbo.Projects.sql",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2026-05-02T20:49:47.817Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\TaskManagerWebAPI\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "TaskManagerWebAPI\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\TaskManagerWebAPI\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "TaskManagerWebAPI\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAYwBwAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-22T21:25:17.046Z",
+              "WhenOpened": "2026-04-30T20:39:45.414Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "IUserService.cs",
+              "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Business\\Abstract\\IUserService.cs",
+              "RelativeDocumentMoniker": "Business\\Abstract\\IUserService.cs",
+              "ToolTip": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Business\\Abstract\\IUserService.cs",
+              "RelativeToolTip": "Business\\Abstract\\IUserService.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAwAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-30T20:38:07.425Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "TaskItemCreateDto.cs",
-              "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Entities\\DTOs\\TaskDTOs\\TaskItemCreateDto.cs",
-              "RelativeDocumentMoniker": "Entities\\DTOs\\TaskDTOs\\TaskItemCreateDto.cs",
-              "ToolTip": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Entities\\DTOs\\TaskDTOs\\TaskItemCreateDto.cs",
-              "RelativeToolTip": "Entities\\DTOs\\TaskDTOs\\TaskItemCreateDto.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "IAuthService.cs",
+              "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Business\\Abstract\\IAuthService.cs",
+              "RelativeDocumentMoniker": "Business\\Abstract\\IAuthService.cs",
+              "ToolTip": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Business\\Abstract\\IAuthService.cs",
+              "RelativeToolTip": "Business\\Abstract\\IAuthService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-22T20:59:09.756Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "TaskItemManager.cs",
-              "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Business\\Concrete\\TaskItemManager.cs",
-              "RelativeDocumentMoniker": "Business\\Concrete\\TaskItemManager.cs",
-              "ToolTip": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Business\\Concrete\\TaskItemManager.cs",
-              "RelativeToolTip": "Business\\Concrete\\TaskItemManager.cs",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAkwDcAAAAiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T22:02:07.282Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "EfTaskItemDal.cs",
-              "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\DataAccess\\Concrete\\EntityFramework\\EfTaskItemDal.cs",
-              "RelativeDocumentMoniker": "DataAccess\\Concrete\\EntityFramework\\EfTaskItemDal.cs",
-              "ToolTip": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\DataAccess\\Concrete\\EntityFramework\\EfTaskItemDal.cs",
-              "RelativeToolTip": "DataAccess\\Concrete\\EntityFramework\\EfTaskItemDal.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABkAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-22T21:27:46.699Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-30T20:37:55.135Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "ITaskDal.cs",
-              "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\DataAccess\\Abstract\\ITaskDal.cs",
-              "RelativeDocumentMoniker": "DataAccess\\Abstract\\ITaskDal.cs",
-              "ToolTip": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\DataAccess\\Abstract\\ITaskDal.cs",
-              "RelativeToolTip": "DataAccess\\Abstract\\ITaskDal.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
+              "Title": "AuthManager.cs",
+              "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Business\\Concrete\\AuthManager.cs",
+              "RelativeDocumentMoniker": "Business\\Concrete\\AuthManager.cs",
+              "ToolTip": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Business\\Concrete\\AuthManager.cs",
+              "RelativeToolTip": "Business\\Concrete\\AuthManager.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAAAswEUAAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-22T21:28:17.508Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-30T20:12:04.083Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "dbo.Users [Data]",
-              "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/TaskManager/True/SqlTable/dbo.Users.sql",
-              "ToolTip": "dbo.Users [Data]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2026-04-22T21:14:50.712Z",
-              "EditorCaption": ""
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\TaskManagerWebAPI\\Program.cs",
+              "RelativeDocumentMoniker": "TaskManagerWebAPI\\Program.cs",
+              "ToolTip": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\TaskManagerWebAPI\\Program.cs",
+              "RelativeToolTip": "TaskManagerWebAPI\\Program.cs",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAAwE0AAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-30T21:36:58.347Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "SubTaskManager .cs",
-              "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Business\\Concrete\\SubTaskManager .cs",
-              "RelativeDocumentMoniker": "Business\\Concrete\\SubTaskManager .cs",
-              "ToolTip": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Business\\Concrete\\SubTaskManager .cs",
-              "RelativeToolTip": "Business\\Concrete\\SubTaskManager .cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAAqwCwAAAAOAAAAAAAAAA==",
+              "Title": "ProjectsController.cs",
+              "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\TaskManagerWebAPI\\Controllers\\ProjectsController.cs",
+              "RelativeDocumentMoniker": "TaskManagerWebAPI\\Controllers\\ProjectsController.cs",
+              "ToolTip": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\TaskManagerWebAPI\\Controllers\\ProjectsController.cs",
+              "RelativeToolTip": "TaskManagerWebAPI\\Controllers\\ProjectsController.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T22:28:03.266Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-30T20:39:55.857Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "SubTasksController.cs",
-              "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\TaskManagerWebAPI\\Controllers\\SubTasksController.cs",
-              "RelativeDocumentMoniker": "TaskManagerWebAPI\\Controllers\\SubTasksController.cs",
-              "ToolTip": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\TaskManagerWebAPI\\Controllers\\SubTasksController.cs",
-              "RelativeToolTip": "TaskManagerWebAPI\\Controllers\\SubTasksController.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAQwCMAAAABAAAAAAAAAA==",
+              "Title": "UserManager.cs",
+              "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Business\\Concrete\\UserManager.cs",
+              "RelativeDocumentMoniker": "Business\\Concrete\\UserManager.cs",
+              "ToolTip": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Business\\Concrete\\UserManager.cs",
+              "RelativeToolTip": "Business\\Concrete\\UserManager.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAADgvy4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-16T22:33:51.127Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "IEntityRepository.cs",
-              "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Core\\DataAccess\\IEntityRepository.cs",
-              "RelativeDocumentMoniker": "Core\\DataAccess\\IEntityRepository.cs",
-              "ToolTip": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Core\\DataAccess\\IEntityRepository.cs",
-              "RelativeToolTip": "Core\\DataAccess\\IEntityRepository.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T20:09:17.036Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "TaskItem.cs",
-              "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Entities\\Concrete\\TaskItem.cs",
-              "RelativeDocumentMoniker": "Entities\\Concrete\\TaskItem.cs",
-              "ToolTip": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Entities\\Concrete\\TaskItem.cs",
-              "RelativeToolTip": "Entities\\Concrete\\TaskItem.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAAA0wCkAAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-16T20:07:55.31Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "ProjectCategory.cs",
-              "DocumentMoniker": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Entities\\Concrete\\ProjectCategory.cs",
-              "RelativeDocumentMoniker": "Entities\\Concrete\\ProjectCategory.cs",
-              "ToolTip": "C:\\Users\\dzhan\\OneDrive\\Documents\\GitHub\\TaskManager\\TaskManagerAPI\\Entities\\Concrete\\ProjectCategory.cs",
-              "RelativeToolTip": "Entities\\Concrete\\ProjectCategory.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-15T19:36:03.522Z"
+              "WhenOpened": "2026-04-30T21:49:29.394Z"
             }
           ]
         }

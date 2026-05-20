@@ -44,5 +44,8 @@ namespace Core.Constants
         public static string ListedActivities = "All activities are listed";
         public static string ActivityAdded = "The activity is added";
         public static string TaskNotFound = "The task is not found";
+
+        public static string UserDeleted = "The user is deleted";
+        public static string ListedUsers = "All users are listed";
     }
 }

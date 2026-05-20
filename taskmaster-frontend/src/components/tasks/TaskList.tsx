@@ -14,7 +14,7 @@ import type { Task } from "../../types/taskTypes";
 import { Check } from "lucide-react";
 
 interface TaskListProps {
-  projectId?: number;
+  projectId: number;
 }
 
 export default function TaskList({ projectId }: TaskListProps) {
@@ -22,28 +22,35 @@ export default function TaskList({ projectId }: TaskListProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data: tasks, isLoading, isError, error } = useTasks(projectId);
-  const { remove, update } = useTaskMutations(projectId); // pass projectId for cache handling
+  const { remove, update } = useTaskMutations(projectId);
+
+  // const currentProjectTasks = (tasks || []).filter((task: any) => {
+  //   const tProjId = task.projectId !== undefined ? task.projectId : task.ProjectId;
+  //   return String(tProjId) === String(projectId);
+  // });
+
+const currentProjectTasks = tasks || [];
 
   const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId } = result;
 
     if (!destination) return;
 
-    if (
+    if ( 
       destination.droppableId === source.droppableId &&
       destination.index === source.index
     ) {
       return;
     }
 
-    const taskToUpdate = tasks?.find(
-      (t) => t.id === Number(draggableId)
+    const taskToUpdate = currentProjectTasks.find(
+      (t: any) => (t.id || t.Id) === Number(draggableId)
     );
 
     if (!taskToUpdate) return;
 
     update.mutate({
-      id: taskToUpdate.id,
+      id: taskToUpdate.id || (taskToUpdate as any).Id,
       data: {
         ...taskToUpdate,
         status: Number(destination.droppableId),
@@ -57,9 +64,7 @@ export default function TaskList({ projectId }: TaskListProps) {
       title: "To Do",
       bg: "bg-gray-100/50",
       text: "text-slate-400",
-      icon: (
-        <div className="w-1.5 h-1.5 rounded-full border border-slate-500" />
-      ),
+      icon: <div className="w-1.5 h-1.5 rounded-full border border-slate-500" />,
       iconBg: "bg-slate-200",
     },
     {
@@ -67,9 +72,7 @@ export default function TaskList({ projectId }: TaskListProps) {
       title: "In Progress",
       bg: "bg-blue-50/50",
       text: "text-blue-500",
-      icon: (
-        <div className="w-2 h-2 rounded-full border-t-2 border-r-2 border-blue-500 rotate-45" />
-      ),
+      icon: <div className="w-2 h-2 rounded-full border-t-2 border-r-2 border-blue-500 rotate-45" />,
       iconBg: "bg-blue-100",
     },
     {
@@ -77,9 +80,7 @@ export default function TaskList({ projectId }: TaskListProps) {
       title: "Done",
       bg: "bg-emerald-50/50",
       text: "text-emerald-500",
-      icon: (
-        <Check size={10} strokeWidth={4} className="text-emerald-600" />
-      ),
+      icon: <Check size={10} strokeWidth={4} className="text-emerald-600" />,
       iconBg: "bg-emerald-100",
     },
   ];
@@ -98,10 +99,7 @@ export default function TaskList({ projectId }: TaskListProps) {
     <div>
       {/* Header */}
       <div className="flex justify-between items-center mb-8">
-        <h2 className="text-xl font-bold text-slate-800">
-          My Tasks
-        </h2>
-
+        <h2 className="text-xl font-bold text-slate-800">My Tasks</h2>
         <button
           onClick={() => setIsModalOpen(true)}
           className="bg-slate-900 text-white px-6 py-2 rounded-xl hover:bg-slate-800 transition-all flex items-center gap-2"
@@ -133,10 +131,7 @@ export default function TaskList({ projectId }: TaskListProps) {
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="flex gap-6 p-4 min-h-[70vh]">
           {columns.map((col) => (
-            <Droppable
-              droppableId={col.id.toString()}
-              key={col.id}
-            >
+            <Droppable droppableId={col.id.toString()} key={col.id}>
               {(provided, snapshot) => (
                 <div
                   ref={provided.innerRef}
@@ -144,33 +139,28 @@ export default function TaskList({ projectId }: TaskListProps) {
                   className={`flex-1 flex flex-col gap-4 p-4 rounded-[24px] transition-colors ${
                     col.bg
                   } ${
-                    snapshot.isDraggingOver
-                      ? "ring-2 ring-slate-200 ring-inset"
-                      : ""
+                    snapshot.isDraggingOver ? "ring-2 ring-slate-200 ring-inset" : ""
                   }`}
                 >
                   {/* Column Header */}
                   <h3 className="flex items-center gap-2 mb-2">
-                    <div
-                      className={`w-4 h-4 rounded-full flex items-center justify-center ${col.iconBg}`}
-                    >
+                    <div className={`w-4 h-4 rounded-full flex items-center justify-center ${col.iconBg}`}>
                       {col.icon}
                     </div>
-                    <span
-                      className={`text-[11px] font-bold uppercase tracking-[0.12em] ${col.text}`}
-                    >
+                    <span className={`text-[11px] font-bold uppercase tracking-[0.12em] ${col.text}`}>
                       {col.title}
                     </span>
                   </h3>
 
                   {/* Tasks */}
                   <div className="flex flex-col gap-4">
-                    {(tasks || [])
-                      .filter((task) => task.status === col.id)
-                      .map((task, index) => (
+                    {/* 👇 2. Map from our project-filtered list instead of global tasks */}
+                    {currentProjectTasks
+                      .filter((task: any) => (task.status === col.id || task.Status === col.id))
+                      .map((task: any, index) => (
                         <Draggable
-                          key={task.id}
-                          draggableId={task.id.toString()}
+                          key={task.id || task.Id}
+                          draggableId={(task.id || task.Id).toString()}
                           index={index}
                         >
                           {(provided, snapshot) => (
@@ -178,20 +168,12 @@ export default function TaskList({ projectId }: TaskListProps) {
                               ref={provided.innerRef}
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
-                              onClick={() =>
-                                setSelectedTask(task)
-                              }
-                              className={`transition-transform ${
-                                snapshot.isDragging
-                                  ? "z-50"
-                                  : ""
-                              }`}
+                              onClick={() => setSelectedTask(task)}
+                              className={`transition-transform ${snapshot.isDragging ? "z-50" : ""}`}
                             >
                               <TaskCard
                                 task={task}
-                                onDelete={(id) =>
-                                  remove.mutate(id)
-                                }
+                                onDelete={(id) => remove.mutate(id)}
                                 onToggle={() => {}}
                               />
                             </div>
@@ -201,9 +183,9 @@ export default function TaskList({ projectId }: TaskListProps) {
 
                     {provided.placeholder}
 
-                    {/* Empty state */}
-                    {(tasks || []).filter(
-                      (t) => t.status === col.id
+                    {/* Empty column state check */}
+                    {currentProjectTasks.filter(
+                      (t: any) => t.status === col.id || t.Status === col.id
                     ).length === 0 && (
                       <div className="flex flex-col items-center justify-center py-8 px-4 border-2 border-dashed border-slate-200 rounded-[20px] bg-white/30">
                         <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
@@ -219,8 +201,7 @@ export default function TaskList({ projectId }: TaskListProps) {
         </div>
       </DragDropContext>
 
-      {/* Global empty */}
-      {tasks?.length === 0 && (
+      {currentProjectTasks.length === 0 && (
         <p className="text-center text-slate-400 py-20">
           No tasks found. Start by adding one!
         </p>

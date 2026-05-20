@@ -1,6 +1,7 @@
 import toast from "react-hot-toast";
 import api from "../../api/axios";
 import type { CreateTaskDto, Task } from "../../types/taskTypes";
+import type { Project } from "../../types/project";
 
 
 interface ApiResponse<T> {
@@ -12,15 +13,18 @@ interface ApiResponse<T> {
 // GET tasks
 export const getTasks = async (projectId?: number): Promise<Task[]> => {
   const url = projectId ? `/TaskItems?projectId=${projectId}` : "/TaskItems";
-  
-  const response = await api.get<{ data: Task[] }>(url);
-  return response.data.data;
+  const response = await api.get<any>(url);
+  return response.data?.Data || response.data?.data || response.data || [];
 };
 
+
 // GET all projects for the dropdown
-export const getProjects = async (): Promise<{id: number, name: string}[]> => {
-  const response = await api.get<{ data: {id: number, name: string}[] }>("/Projects");
-  return response.data.data;
+export const getProjects = async (userId?: number): Promise<Project[]> => {
+  const response = await api.get<any>(`/Projects`, {
+    params: { userId }
+  });
+
+  return response.data?.Data || response.data?.data || response.data || [];
 };
 
 

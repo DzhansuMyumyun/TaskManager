@@ -12,7 +12,6 @@ export const useTaskMutations = (projectId?: number) => {
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tasks", projectId] });
-      //toast.success("Task created");
     },
 
     onError: () => {
@@ -67,7 +66,6 @@ export const useTaskMutations = (projectId?: number) => {
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tasks", projectId] });
-      //toast.success("Task deleted");
     },
 
     onError: () => {

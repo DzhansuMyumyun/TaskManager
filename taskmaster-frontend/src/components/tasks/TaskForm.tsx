@@ -10,7 +10,7 @@ import type { CreateTaskDto, Task } from "../../types/taskTypes";
 import { QueryClient, useQueryClient } from "@tanstack/react-query";
 
 export default function TaskForm({
-  onSuccess,
+  onSuccess, 
   initialData,
   currentProjectId,
 }: {
@@ -108,26 +108,6 @@ export default function TaskForm({
         const originalIds = initialData?.subTasks?.map((st) => st.id) || [];
         const toDelete = originalIds.filter((id) => !existingIds.includes(id));
         await Promise.all(toDelete.map((id) => deleteSubTask(id)));
-
-        //UPSERT REMAINING SUBTASKS (Wait for all to finish)
-        /*         await Promise.all(
-          formData.subTasks.map((st) => {
-            if (st.id) {
-              return updateSubTask(st.id, {
-                id: st.id,
-                title: st.title || "",
-                isCompleted: st.isCompleted || false,
-                taskItemId: initialData.id!,
-              });
-            } else {
-              return createSubTask({
-                title: st.title || "",
-                isCompleted: st.isCompleted || false,
-                taskItemId: initialData.id!,
-              });
-            }
-          }),
-        ); */
 
         await Promise.all(
           formData.subTasks.map((st) =>
@@ -269,7 +249,7 @@ export default function TaskForm({
               {formData.subTasks.length} items
             </span>
           </div>
-
+              
           {/* Subtask List */}
           <div className="space-y-2 mb-4 max-h-40 overflow-y-auto pr-1">
             {formData.subTasks.map((st, index) => (

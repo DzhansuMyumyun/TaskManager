@@ -1,13 +1,24 @@
-import type { Task } from "../../types/taskTypes";
+import { type Task } from "../../types/taskTypes";
 import { memo } from 'react';
 
 interface Props {
   task: Task;
-  onDelete: (id:number) => void;
-  onToggle: (id:string) => void;
+  onDelete: (id: number) => void;
+  onToggle: (id: string) => void;
 }
 
 const TaskCard = memo(({ task, onDelete, onToggle }: Props) => {
+  // Safe extraction of properties supporting both lowercase and PascalCase formats
+  const rawTask = task as any;
+  const taskId = rawTask.id !== undefined ? rawTask.id : rawTask.Id;
+  const taskTitle = rawTask.title || rawTask.Title || "Untitled Task";
+  const taskDescription = rawTask.description || rawTask.Description || "";
+  const taskPriority = rawTask.priority !== undefined ? rawTask.priority : (rawTask.Priority !== undefined ? rawTask.Priority : 1);
+  const taskStatus = rawTask.status !== undefined ? rawTask.status : (rawTask.Status !== undefined ? rawTask.Status : 0);
+  const taskDueDate = rawTask.dueDate || rawTask.DueDate || "";
+
+  // 🌟 DEFENSIVE FALLBACK FOR SUBTASKS: Grabs array safely if either casing exists, or defaults to an empty array
+  const subTasksArray = rawTask.subTasks || rawTask.SubTasks || [];
 
   const priorityStyleColors: Record<number, { label: string, color: string, dot: string }> = {
     0: { label: "Low", color: "bg-emerald-100 text-emerald-600", dot: "bg-emerald-400" },
@@ -15,41 +26,49 @@ const TaskCard = memo(({ task, onDelete, onToggle }: Props) => {
     2: { label: "Urgent", color: "bg-rose-200 text-rose-500", dot: "bg-rose-500" },
   };
 
-    const statusStyleColors: Record<number, string> = {
-    0: 'bg-gray-400', // To do 
-    1: 'bg-blue-500',   // In Progress
+  const statusStyleColors: Record<number, string> = {
+    0: 'bg-gray-400',       // To do 
+    1: 'bg-blue-500',       // In Progress
     2: 'bg-emerald-400',    // Done
   };
 
- const priority = priorityStyleColors[task.priority] || priorityStyleColors[1];
- const allSubtasks = task.subTasks.length;
- const subtaskComplete = task.subTasks.filter(s => s.isCompleted === true).length;
+  const priority = priorityStyleColors[taskPriority] || priorityStyleColors[1];
+  
+  // 🌟 SAFE COUNTS: No more .length errors on undefined properties!
+  const allSubtasks = subTasksArray.length;
+  const subtaskComplete = subTasksArray.filter((s: any) => s.isCompleted === true || s.IsCompleted === true).length;
 
   return (
     <div 
-      onClick={() => onToggle(task.id.toString())} 
+      onClick={() => onToggle(String(taskId))} 
       className="group cursor-pointer relative overflow-hidden bg-white/60 backdrop-blur-md border border-white/40 p-5 rounded-2xl shadow-sm transition-all hover:shadow-md hover:bg-white/80"
     >      
       {/* Priority Indicator Line */}
-      <div className={`absolute left-0 top-0 h-full w-1.5 ${statusStyleColors[task.status] || 'bg-slate-200'}`} />
+      <div className={`absolute left-0 top-0 h-full w-1.5 ${statusStyleColors[taskStatus] || 'bg-slate-200'}`} />
       
       <div className="flex justify-between items-start pl-2">
         <div className="flex-1">
           <h2 className="font-bold text-slate-800 text-base leading-tight group-hover:text-blue-600 transition-colors">
-            {task.title}
+            {taskTitle}
           </h2>
-          <p className="text-xs text-slate-500 mt-1.5 line-clamp-2 leading-relaxed">
-            {task.description}
-          </p>
-          <p className="text-xs text-slate-500 pt-5 mt-1.5 line-clamp-2 leading-relaxed">
-            ✔ {subtaskComplete}/{allSubtasks} subtasks completed
-          </p>
+          {taskDescription && (
+            <p className="text-xs text-slate-500 mt-1.5 line-clamp-2 leading-relaxed">
+              {taskDescription}
+            </p>
+          )}
+          
+          {/* Only render subtask text block if subtasks actually exist */}
+          {allSubtasks > 0 && (
+            <p className="text-xs text-slate-500 pt-5 mt-1.5 line-clamp-2 leading-relaxed">
+              ✔ {subtaskComplete}/{allSubtasks} subtasks completed
+            </p>
+          )}
         </div>
         
         <button 
           onClick={(e) => {
             e.stopPropagation(); 
-            onDelete(task.id);
+            onDelete(Number(taskId));
           }}
           className="ml-2 p-1.5 opacity-0 group-hover:opacity-100 hover:bg-red-50 rounded-lg text-slate-400 hover:text-red-500 transition-all"
           aria-label="Delete task"
@@ -64,15 +83,14 @@ const TaskCard = memo(({ task, onDelete, onToggle }: Props) => {
           {priority.label}
         </span>
 
-        {/* Placeholder for Date or Subtasks */}
+        {/* Placeholder for Date */}
         <span className="text-[10px] font-medium text-slate-400 italic">
-          {task.dueDate ? `Due ${task.dueDate}` : ''}
+          {taskDueDate ? `Due ${taskDueDate}` : ''}
         </span>
       </div>
     </div>
   );
 });
+
+TaskCard.displayName = "TaskCard";
 export default TaskCard;
-
-
-

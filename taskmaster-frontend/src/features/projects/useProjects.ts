@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { getProjects } from "../tasks/taskService";
-import type { Task } from "../../types/taskTypes";
 
 
 
-export const useProjects = () => {
+export const useProjects = (isEnabled: boolean, userId?: number) => {
   return useQuery({
-    queryKey: ['projects'],
-    queryFn: () => getProjects() 
+    queryKey: ['projects',userId],
+    queryFn: () => getProjects(userId),
+    enabled: isEnabled && !!userId,
   });
 };

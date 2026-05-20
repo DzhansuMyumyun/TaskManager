@@ -16,6 +16,14 @@ namespace TaskManagerWebAPI.Controllers
             _authService = authService;
         }
 
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var result = _authService.GetAll();
+            return Ok(result);
+        }
+
+
         [HttpPost("login")]
         public ActionResult Login(UserForLoginDto userForLoginDto)
         {
@@ -35,7 +43,7 @@ namespace TaskManagerWebAPI.Controllers
         }
 
         [HttpPost("register")]
-        public ActionResult Register(UserForRegisterDto userForRegisterDto)
+        public ActionResult Register([FromBody] UserForRegisterDto userForRegisterDto)
         {
             var userExists = _authService.UserExists(userForRegisterDto.Email);
             if (!userExists.Success)
@@ -44,6 +52,10 @@ namespace TaskManagerWebAPI.Controllers
             }
 
             var registerResult = _authService.Register(userForRegisterDto, userForRegisterDto.Password);
+            if (!registerResult.Success)
+            {
+                return BadRequest(registerResult.Message);
+            }
             var result = _authService.CreateAccessToken(registerResult.Data);
             if (result.Success)
             {
