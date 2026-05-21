@@ -1,18 +1,36 @@
 import { useTasks } from "../../features/tasks/useTasks";
-import type { Task } from "../../types/taskTypes";
 import { StatCard } from "./StatCard";
 
-export default function TaskStats({ projectId }: { projectId: number }) {
-const { data: projectTasks = [], isLoading } = useTasks(projectId);
+export default function TaskInfo({ projectId }: { projectId: number }) {
+  // Fetch the tasks dataset for this project
+  const { data, isLoading } = useTasks(projectId);
   
-  // Calculations
-  const completedCount = projectTasks.filter(t => t.status === 2).length;
+  // 1. SAFELY ACQUIRE THE RAW ARRAY FROM THE HOOK
+  const projectTasks = Array.isArray(data) ? data : (data as any)?.data || [];
+
+  // 2. COUNTERS: Directly evaluate statuses from the server-filtered dataset
+  const completedCount = projectTasks.filter((t: any) => {
+    const status = t.Status !== undefined ? t.Status : t.status;
+    return Number(status) === 2 || String(status).toLowerCase() === "done";
+  }).length;
+
   const total = projectTasks.length;
   const percentage = total > 0 ? Math.round((completedCount / total) * 100) : 0;
   
-  const pendingCount = projectTasks.filter(t => t.status === 0).length;
-  const inProgressCount = projectTasks.filter(t => t.status === 1).length;
-  const highPriorityCount = projectTasks.filter(t => t.priority === 2).length;
+  const pendingCount = projectTasks.filter((t: any) => {
+    const status = t.Status !== undefined ? t.Status : t.status;
+    return Number(status) === 0 || String(status).toLowerCase() === "to do";
+  }).length;
+
+  const inProgressCount = projectTasks.filter((t: any) => {
+    const status = t.Status !== undefined ? t.Status : t.status;
+    return Number(status) === 1 || String(status).toLowerCase() === "in progress";
+  }).length;
+
+  const highPriorityCount = projectTasks.filter((t: any) => {
+    const priority = t.Priority !== undefined ? t.Priority : t.priority;
+    return Number(priority) === 2 || String(priority).toLowerCase() === "urgent" || String(priority).toLowerCase() === "high";
+  }).length;
 
   if (isLoading) return <div className="grid grid-cols-1 md:grid-cols-4 gap-4 animate-pulse h-28" />;
 
@@ -27,7 +45,7 @@ const { data: projectTasks = [], isLoading } = useTasks(projectId);
         variant="progress"
       />
 
-      {/* Card 2: Pending */}
+      {/* Card 2: To Do */}
       <StatCard 
         title="To Do" 
         value={pendingCount} 

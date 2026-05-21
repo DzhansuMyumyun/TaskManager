@@ -17,8 +17,8 @@ const TaskCard = memo(({ task, onDelete, onToggle }: Props) => {
   const taskStatus = rawTask.status !== undefined ? rawTask.status : (rawTask.Status !== undefined ? rawTask.Status : 0);
   const taskDueDate = rawTask.dueDate || rawTask.DueDate || "";
 
-  // 🌟 DEFENSIVE FALLBACK FOR SUBTASKS: Grabs array safely if either casing exists, or defaults to an empty array
-  const subTasksArray = rawTask.subTasks || rawTask.SubTasks || [];
+  // Safe extraction lookup checking every PascalCase/camelCase variation for subtask arrays
+  const subTasksArray = rawTask.subTasks || rawTask.SubTasks || rawTask.subtasks || rawTask.Subtasks || [];
 
   const priorityStyleColors: Record<number, { label: string, color: string, dot: string }> = {
     0: { label: "Low", color: "bg-emerald-100 text-emerald-600", dot: "bg-emerald-400" },
@@ -34,9 +34,15 @@ const TaskCard = memo(({ task, onDelete, onToggle }: Props) => {
 
   const priority = priorityStyleColors[taskPriority] || priorityStyleColors[1];
   
-  // 🌟 SAFE COUNTS: No more .length errors on undefined properties!
   const allSubtasks = subTasksArray.length;
-  const subtaskComplete = subTasksArray.filter((s: any) => s.isCompleted === true || s.IsCompleted === true).length;
+  
+  // Safe subtask completion status evaluator checking boolean or status values (e.g., Status === 2)
+  const subtaskComplete = subTasksArray.filter((s: any) => {
+    const isDone = s.IsCompleted !== undefined ? s.IsCompleted : (s.isCompleted !== undefined ? s.isCompleted : s.completed);
+    const subStatus = s.Status !== undefined ? s.Status : s.status;
+    
+    return isDone === true || String(isDone).toLowerCase() === "true" || Number(subStatus) === 2 || String(subStatus).toLowerCase() === "done";
+  }).length;
 
   return (
     <div 
@@ -51,16 +57,18 @@ const TaskCard = memo(({ task, onDelete, onToggle }: Props) => {
           <h2 className="font-bold text-slate-800 text-base leading-tight group-hover:text-blue-600 transition-colors">
             {taskTitle}
           </h2>
+          
+          {/* Render description if present */}
           {taskDescription && (
             <p className="text-xs text-slate-500 mt-1.5 line-clamp-2 leading-relaxed">
               {taskDescription}
             </p>
           )}
           
-          {/* Only render subtask text block if subtasks actually exist */}
+          {/* Render subtask text block if subtasks exist */}
           {allSubtasks > 0 && (
-            <p className="text-xs text-slate-500 pt-5 mt-1.5 line-clamp-2 leading-relaxed">
-              ✔ {subtaskComplete}/{allSubtasks} subtasks completed
+            <p className="text-xs text-slate-500 pt-3 mt-1.5 line-clamp-2 leading-relaxed flex items-center gap-1">
+              <span>📋</span> {subtaskComplete}/{allSubtasks} subtasks completed
             </p>
           )}
         </div>
@@ -83,7 +91,7 @@ const TaskCard = memo(({ task, onDelete, onToggle }: Props) => {
           {priority.label}
         </span>
 
-        {/* Placeholder for Date */}
+        {/* Due Date Indicator */}
         <span className="text-[10px] font-medium text-slate-400 italic">
           {taskDueDate ? `Due ${taskDueDate}` : ''}
         </span>

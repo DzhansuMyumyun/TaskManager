@@ -4,12 +4,11 @@ import { useUserMutations } from "../../features/user/useUserMutations";
 import { useState } from "react";
 
 
-export default function UserRegisterForm({onSuccess,initialData}:
-    {
-      onSuccess: () => void;
-      initialData?: UserRegisterDto | null;
-    })
-{
+export default function UserRegisterForm({ onSuccess, onSwitchToLogin, initialData }: {
+    onSuccess: () => void;
+    onSwitchToLogin: () => void; 
+    initialData?: UserRegisterDto | null;
+}) {
     const {create} = useUserMutations();
     const queryClient = useQueryClient();
     const [formData, setFormData] = useState({
@@ -81,6 +80,16 @@ export default function UserRegisterForm({onSuccess,initialData}:
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-2xl transition-all disabled:opacity-50"
                 >
                     {create.isPending ? "Creating Account..." : "Register"}
+                </button>
+            </div>
+            <div className="text-center text-xs text-slate-500 mt-4 mb-6">
+                Already have an account?{" "}
+                <button 
+                    type="button"
+                    onClick={onSwitchToLogin} 
+                    className="font-bold text-blue-600 hover:underline transition-all"
+                >
+                    Sign in here
                 </button>
             </div>
         </form>

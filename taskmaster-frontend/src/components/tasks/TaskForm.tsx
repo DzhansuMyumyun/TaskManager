@@ -7,10 +7,10 @@ import {
 } from "../../features/subTask/subTaskService";
 import type { SubTask } from "../../types/subTask";
 import type { CreateTaskDto, Task } from "../../types/taskTypes";
-import { QueryClient, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function TaskForm({
-  onSuccess, 
+  onSuccess,
   initialData,
   currentProjectId,
 }: {
@@ -31,46 +31,69 @@ export default function TaskForm({
     subTasks: [] as Partial<SubTask>[],
   });
 
-  // Populate form (Edit mode)
+  // Populate form (Edit mode) with support for lowercase and PascalCase properties
   useEffect(() => {
     if (initialData) {
+      const rawData = initialData as any;
+
+      // Handle the different possible variations of subtasks coming from backend
+      const incomingSubTasks =
+        rawData.subTasks ||
+        rawData.SubTasks ||
+        rawData.subtasks ||
+        rawData.Subtasks ||
+        [];
+
       setFormData({
-        title: initialData.title || "",
-        description: initialData.description || "",
-        priority: initialData.priority,
-        status: initialData.status,
-        projectId: initialData.projectId || 2,
-        dueDate: initialData.dueDate
-          ? initialData.dueDate.split("T")[0]
-          : new Date().toISOString().split("T")[0],
-        subTasks: initialData.subTasks || [],
+        title: rawData.title || rawData.Title || "",
+        description: rawData.description || rawData.Description || "",
+        priority:
+          rawData.priority !== undefined
+            ? rawData.priority
+            : rawData.Priority !== undefined
+              ? rawData.Priority
+              : 1,
+        status:
+          rawData.status !== undefined
+            ? rawData.status
+            : rawData.Status !== undefined
+              ? rawData.Status
+              : 0,
+        projectId: rawData.projectId || rawData.ProjectId || currentProjectId,
+        dueDate:
+          rawData.dueDate || rawData.DueDate
+            ? (rawData.dueDate || rawData.DueDate).split("T")[0]
+            : new Date().toISOString().split("T")[0],
+        subTasks: incomingSubTasks,
       });
     } else {
-      // Reset form for "Create Mode" when switching projects
-      setFormData((prev) => ({ ...prev, projectId: currentProjectId }));
+      // Reset form for "Create Mode"
+      setFormData({
+        title: "",
+        description: "",
+        priority: 1,
+        status: 0,
+        projectId: currentProjectId,
+        dueDate: new Date().toISOString().split("T")[0],
+        subTasks: [],
+      });
     }
   }, [initialData, currentProjectId]);
 
   const addSubTask = (e: React.MouseEvent | React.KeyboardEvent) => {
     e.preventDefault();
-
     if (!subTaskInput.trim()) return;
 
-    setFormData((prev) => {
-      const updated = [
+    setFormData((prev) => ({
+      ...prev,
+      subTasks: [
         ...prev.subTasks,
         {
           title: subTaskInput.trim(),
           isCompleted: false,
         },
-      ];
-
-      return {
-        ...prev,
-        subTasks: updated,
-      };
-    });
-
+      ],
+    }));
     setSubTaskInput("");
   };
 
@@ -83,14 +106,17 @@ export default function TaskForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const rawInitial = initialData as any;
+    const taskId =
+      rawInitial?.id !== undefined ? rawInitial?.id : rawInitial?.Id;
 
     try {
-      if (initialData?.id) {
-        // UPDATE MAIN TASK FIRST
+      if (taskId) {
+        // UPDATE MAIN TASK FIRST (Payload mapping supports backend architecture)
         await update.mutateAsync({
-          id: initialData.id,
+          id: taskId,
           data: {
-            id: initialData.id,
+            id: taskId,
             title: formData.title,
             description: formData.description,
             status: formData.status,
@@ -101,47 +127,84 @@ export default function TaskForm({
           },
         });
 
-        // HANDLE DELETIONS
+        // HANDLE DELETIONS (Safely extract existing subtask IDs)
         const existingIds = formData.subTasks
-          .filter((st) => st.id)
-          .map((st) => st.id);
-        const originalIds = initialData?.subTasks?.map((st) => st.id) || [];
-        const toDelete = originalIds.filter((id) => !existingIds.includes(id));
-        await Promise.all(toDelete.map((id) => deleteSubTask(id)));
+          .map((st: any) => (st.id !== undefined ? st.id : st.Id))
+          .filter(Boolean);
 
+        const incomingSubTasks =
+          rawInitial?.subTasks ||
+          rawInitial?.SubTasks ||
+          rawInitial?.subtasks ||
+          rawInitial?.Subtasks ||
+          [];
+        const originalIds = incomingSubTasks
+          .map((st: any) => (st.id !== undefined ? st.id : st.Id))
+          .filter(Boolean);
+
+        const toDelete = originalIds.filter(
+          (id: number) => !existingIds.includes(id),
+        );
+        await Promise.all(toDelete.map((id: number) => deleteSubTask(id)));
+
+        // UPDATE OR CREATE SUBTASKS
         await Promise.all(
-          formData.subTasks.map((st) =>
-            st.id
-              ? updateSubTask(st.id, {
+          formData.subTasks.map((st: any) => {
+            const subTaskId = st.id !== undefined ? st.id : st.Id;
+            // Support either naming convention inside the updated object payload
+            const subTaskPayload = {
+              title: st.title || st.Title || "",
+              isCompleted:
+                st.isCompleted !== undefined
+                  ? st.isCompleted
+                  : st.IsCompleted !== undefined
+                    ? st.IsCompleted
+                    : false,
+              taskItemId: taskId,
+            };
+
+            return subTaskId
+              ? updateSubTask(subTaskId, {
                   ...st,
-                  taskItemId: initialData.id!,
+                  ...subTaskPayload,
+                  id: subTaskId,
                 } as SubTask)
-              : createSubTask({ ...st, taskItemId: initialData.id! } as any),
-          ),
+              : createSubTask({ ...subTaskPayload } as any);
+          }),
         );
       } else {
         // CREATE NEW TASK
         const createdTask: any = await create.mutateAsync(
           formData as CreateTaskDto,
         );
-        const taskId =
+        const newTaskId =
           createdTask?.data?.data?.id ||
           createdTask?.data?.id ||
-          createdTask?.id;
+          createdTask?.id ||
+          createdTask?.data?.data?.Id ||
+          createdTask?.data?.Id ||
+          createdTask?.Id;
 
-        if (taskId) {
+        if (newTaskId) {
           await Promise.all(
-            formData.subTasks.map((st) =>
+            formData.subTasks.map((st: any) =>
               createSubTask({
-                title: st.title || "",
-                isCompleted: st.isCompleted || false,
-                taskItemId: Number(taskId),
-              })
-            )
+                title: st.title || st.Title || "",
+                isCompleted:
+                  st.isCompleted !== undefined
+                    ? st.isCompleted
+                    : st.IsCompleted !== undefined
+                      ? st.IsCompleted
+                      : false,
+                taskItemId: Number(newTaskId),
+              }),
+            ),
           );
         }
       }
-      await queryClient.invalidateQueries({ queryKey: ["tasks", currentProjectId] });
+      await queryClient.invalidateQueries({
+        queryKey: ["tasks", currentProjectId],
+      });
       onSuccess();
     } catch (err) {
       console.error("Submit failed:", err);
@@ -163,8 +226,9 @@ export default function TaskForm({
         </p>
       </div>
 
-      {/* Title */}
+      {/* Body Content Fields */}
       <div className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar">
+        {/* Title */}
         <div>
           <label className="block text-sm font-semibold text-slate-600 mb-1">
             Title
@@ -239,7 +303,7 @@ export default function TaskForm({
           </div>
         </div>
 
-        {/* Subtasks */}
+        {/* Subtasks Container */}
         <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100">
           <div className="flex items-center justify-between mb-3">
             <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">
@@ -249,47 +313,71 @@ export default function TaskForm({
               {formData.subTasks.length} items
             </span>
           </div>
-              
-          {/* Subtask List */}
+
+          {/* Subtask List Renderer */}
           <div className="space-y-2 mb-4 max-h-40 overflow-y-auto pr-1">
-            {formData.subTasks.map((st, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-3 p-2.5 bg-white rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition"
-              >
-                <input
-                  type="checkbox"
-                  checked={st.isCompleted}
-                  onChange={() => {
-                    const updated = [...formData.subTasks];
-                    updated[index].isCompleted = !updated[index].isCompleted;
-                    setFormData({ ...formData, subTasks: updated });
-                  }}
-                  className="w-5 h-5 accent-blue-500 cursor-pointer"
-                />
+            {/* 🌟 Replace your subtask array map loop with this safely casted version */}
+            {formData.subTasks.map((subTaskItem: any, index) => {
+              const isChecked =
+                subTaskItem.isCompleted !== undefined
+                  ? subTaskItem.isCompleted
+                  : subTaskItem.IsCompleted !== undefined
+                    ? subTaskItem.IsCompleted
+                    : false;
 
-                <span
-                  className={`flex-1 text-sm ${
-                    st.isCompleted
-                      ? "text-slate-400 line-through"
-                      : "text-slate-700"
-                  }`}
-                >
-                  {st.title}
-                </span>
+              const subTitle = subTaskItem.title || subTaskItem.Title || "";
 
-                <button
-                  type="button"
-                  onClick={() => removeSubTask(index)}
-                  className="text-slate-400 hover:text-red-500 transition"
+              return (
+                <div
+                  key={index}
+                  className="flex items-center gap-3 p-2.5 bg-white rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition"
                 >
-                  ✕
-                </button>
-              </div>
-            ))}
+                  <input
+                    type="checkbox"
+                    checked={isChecked}
+                    onChange={() => {
+                      const updated = [...formData.subTasks].map((item, i) => {
+                        if (i !== index) return item;
+
+                        const castedItem = { ...item } as any;
+                        // Toggle the value safely on whatever casing exists
+                        if (castedItem.isCompleted !== undefined)
+                          castedItem.isCompleted = !isChecked;
+                        if (castedItem.IsCompleted !== undefined)
+                          castedItem.IsCompleted = !isChecked;
+                        if (
+                          castedItem.isCompleted === undefined &&
+                          castedItem.IsCompleted === undefined
+                        ) {
+                          castedItem.isCompleted = !isChecked;
+                        }
+                        return castedItem;
+                      });
+
+                      setFormData({ ...formData, subTasks: updated });
+                    }}
+                    className="w-5 h-5 accent-blue-500 cursor-pointer"
+                  />
+
+                  <span
+                    className={`flex-1 text-sm ${isChecked ? "text-slate-400 line-through" : "text-slate-700"}`}
+                  >
+                    {subTitle}
+                  </span>
+
+                  <button
+                    type="button"
+                    onClick={() => removeSubTask(index)}
+                    className="text-slate-400 hover:text-red-500 transition"
+                  >
+                    ✕
+                  </button>
+                </div>
+              );
+            })}
           </div>
 
-          {/* Add Subtask */}
+          {/* Add Subtask Trigger Inputs */}
           <div className="flex gap-2">
             <input
               className="flex-1 bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-400"
@@ -300,7 +388,6 @@ export default function TaskForm({
                 e.key === "Enter" && (e.preventDefault(), addSubTask(e))
               }
             />
-
             <button
               type="button"
               onClick={(e) => addSubTask(e)}
@@ -312,7 +399,7 @@ export default function TaskForm({
         </div>
       </div>
 
-      {/* Submit */}
+      {/* Submit Actions Footer Bar */}
       <div className="p-6 bg-white border-t border-slate-50">
         <button
           type="submit"
