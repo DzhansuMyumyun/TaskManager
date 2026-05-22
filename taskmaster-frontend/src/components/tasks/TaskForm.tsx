@@ -31,54 +31,55 @@ export default function TaskForm({
     subTasks: [] as Partial<SubTask>[],
   });
 
-  // Populate form (Edit mode) with support for lowercase and PascalCase properties
+
   useEffect(() => {
-    if (initialData) {
-      const rawData = initialData as any;
+  if (initialData) {
+    const rawData = initialData as any;
 
-      // Handle the different possible variations of subtasks coming from backend
-      const incomingSubTasks =
-        rawData.subTasks ||
-        rawData.SubTasks ||
-        rawData.subtasks ||
-        rawData.Subtasks ||
-        [];
+    // Direct fix for subtask extraction mapping PascalCase from API payload
+    const incomingSubTasks =
+      rawData.SubTasks ||
+      rawData.subTasks ||
+      rawData.subtasks ||
+      rawData.Subtasks ||
+      [];
 
-      setFormData({
-        title: rawData.title || rawData.Title || "",
-        description: rawData.description || rawData.Description || "",
-        priority:
-          rawData.priority !== undefined
+    setFormData({
+      title: rawData.Title || rawData.title || "",
+      description: rawData.Description || rawData.description || "",
+      priority:
+        rawData.Priority !== undefined
+          ? rawData.Priority
+          : rawData.priority !== undefined
             ? rawData.priority
-            : rawData.Priority !== undefined
-              ? rawData.Priority
-              : 1,
-        status:
-          rawData.status !== undefined
+            : 1,
+      status:
+        rawData.Status !== undefined
+          ? rawData.Status
+          : rawData.status !== undefined
             ? rawData.status
-            : rawData.Status !== undefined
-              ? rawData.Status
-              : 0,
-        projectId: rawData.projectId || rawData.ProjectId || currentProjectId,
-        dueDate:
-          rawData.dueDate || rawData.DueDate
-            ? (rawData.dueDate || rawData.DueDate).split("T")[0]
-            : new Date().toISOString().split("T")[0],
-        subTasks: incomingSubTasks,
-      });
-    } else {
-      // Reset form for "Create Mode"
-      setFormData({
-        title: "",
-        description: "",
-        priority: 1,
-        status: 0,
-        projectId: currentProjectId,
-        dueDate: new Date().toISOString().split("T")[0],
-        subTasks: [],
-      });
-    }
-  }, [initialData, currentProjectId]);
+            : 0,
+      projectId: rawData.ProjectId || rawData.projectId || currentProjectId,
+      dueDate:
+        rawData.DueDate || rawData.dueDate
+          ? (rawData.DueDate || rawData.dueDate).split("T")[0]
+          : new Date().toISOString().split("T")[0],
+      // This assigns your existing items safely to the local working state array!
+      subTasks: incomingSubTasks,
+    });
+  } else {
+    // Reset form for "Create Mode"
+    setFormData({
+      title: "",
+      description: "",
+      priority: 1,
+      status: 0,
+      projectId: currentProjectId,
+      dueDate: new Date().toISOString().split("T")[0],
+      subTasks: [],
+    });
+  }
+}, [initialData, currentProjectId]);
 
   const addSubTask = (e: React.MouseEvent | React.KeyboardEvent) => {
     e.preventDefault();

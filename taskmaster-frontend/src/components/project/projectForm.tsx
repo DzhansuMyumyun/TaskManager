@@ -47,7 +47,7 @@ export default function ProjectForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col w-full max-w-md bg-white/80 backdrop-blur-xl rounded-[2.5rem] border border-white p-10 shadow-soft"
+      className="flex flex-col w-full max-w-md bg-white/70 backdrop-blur-xl rounded-[2.5rem] border border-white/40 p-10 shadow-xl transition-all"
     >
       <div className="mb-8 text-center">
         <h2 className="text-2xl font-bold text-slate-800">Project</h2>
